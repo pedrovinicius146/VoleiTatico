@@ -1,0 +1,6 @@
+{
+  "name": "VôleiTático - Simulador Tático & Educativo de Voleibol",
+  "description": "Simulador tático e pedagógico de voleibol de quadra (6x0, 4x2, 5x1) e vôlei de praia com sinais de bloqueio, validador de faltas de posição, gamificação e modo professor.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
