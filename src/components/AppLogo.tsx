@@ -24,7 +24,7 @@ export const AppLogo: React.FC<AppLogoProps> = ({
       <div className={`relative shrink-0 ${sizeMap[size]} transition-transform duration-200 hover:scale-105 drop-shadow-md`}>
         <img
           src="/logo.svg"
-          alt="Logotipo Oficial Vôley Tático Brazil"
+          alt="Logotipo Oficial REDE VÔLEI"
           className="w-full h-full object-contain"
           referrerPolicy="no-referrer"
         />
@@ -33,11 +33,11 @@ export const AppLogo: React.FC<AppLogoProps> = ({
         <div className="flex flex-col leading-tight">
           <div className="flex items-center gap-1.5">
             <span className="font-extrabold text-base tracking-tight text-white">
-              VÔLEY <span className="text-yellow-400">TÁTICO</span>
+              REDE <span className="text-yellow-400">VÔLEI</span>
             </span>
           </div>
           <span className="text-[9px] font-bold text-sky-200 tracking-widest uppercase">
-            Escolar & Formação • Brazil
+            Simulador & Prancheta Tática
           </span>
         </div>
       )}

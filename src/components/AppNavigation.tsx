@@ -86,10 +86,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = ({
             <div className="min-w-0">
               <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
                 <h1 className="text-sm sm:text-base md:text-lg font-black tracking-tight text-white flex items-center gap-1">
-                  VÔLEY <span className="text-yellow-400">TÁTICO</span>
-                  <span className="text-[9px] sm:text-[10px] font-extrabold uppercase px-1 py-0.5 rounded bg-blue-950/80 text-yellow-300 border border-yellow-500/40">
-                    BRAZIL
-                  </span>
+                  REDE <span className="text-yellow-400">VÔLEI</span>
                 </h1>
                 <span className="hidden lg:inline-block text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-blue-800 text-sky-200 border border-blue-700">
                   Educação Física & Base

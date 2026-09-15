@@ -1,4 +1,4 @@
-# 🏐 VôleiTático Brasil — Simulador Tático & Educativo de Voleibol
+# 🏐 REDE VÔLEI — Plataforma & Simulador Tático de Voleibol
 
 > **Plataforma interativa, pedagógica e gamificada para ensino, visualização e treinamento tático de Voleibol de Quadra (6x0, 4x2, 5x1) e Vôlei de Praia (com sinais de bloqueio).**  
 > Desenvolvida com foco em Educação Física Escolar, categorias de base, treinadores e estudantes do esporte.
@@ -25,7 +25,7 @@
 
 ## 🎯 Visão Geral
 
-O **VôleiTático Brasil** é uma aplicação web progressiva (PWA Ready) projetada para superar o desafio do ensino dos sistemas táticos do voleibol. Tradicionalmente explicado de forma abstrata em quadros brancos, o posicionamento de atletas e as regras de rodízio da FIVB ganham vida através de uma interface interativa com movimentação livre, animação de fases de jogo (Recepção do Saque vs. Ataque/Transição), validação automática de faltas de posicionamento e um simulador dedicado ao vôlei de praia com os sinais manuais codificados de bloqueio.
+O **REDE VÔLEI** é uma aplicação web progressiva (PWA Ready) projetada para superar o desafio do ensino dos sistemas táticos do voleibol. Tradicionalmente explicado de forma abstrata em quadros brancos, o posicionamento de atletas e as regras de rodízio da FIVB ganham vida através de uma interface interativa com movimentação livre, animação de fases de jogo (Recepção do Saque vs. Ataque/Transição), validação automática de faltas de posicionamento e um simulador dedicado ao vôlei de praia com os sinais manuais codificados de bloqueio.
 
 O projeto atende tanto o aluno em processo de aprendizagem individual quanto o professor em sala de aula ou quadra por meio de relatórios pedagógicos e controle de turmas.
 
@@ -152,7 +152,7 @@ O projeto segue princípios de **Clean Architecture**, **Separação de Preocupa
 ## 📁 Estrutura de Diretórios
 
 ```bash
-voleitatico-brasil/
+rede-volei/
 ├── .env.example              # Documentação das variáveis de ambiente necessárias
 ├── .gitignore                # Arquivos ignorados pelo controle de versão
 ├── index.html                # Entrypoint HTML com fontes do Google e meta tags
@@ -161,7 +161,7 @@ voleitatico-brasil/
 ├── tsconfig.json             # Configurações do compilador TypeScript
 ├── vite.config.ts            # Configuração do Vite com suporte ao Tailwind v4
 ├── public/
-│   ├── logo.svg              # Logotipo vetorial oficial do VôleiTático
+│   ├── logo.svg              # Logotipo vetorial oficial do REDE VÔLEI
 │   └── database_diagram.pdf  # Diagrama conceitual da arquitetura
 └── src/
     ├── main.tsx              # Ponto de montagem da raiz React (createRoot)
@@ -257,8 +257,8 @@ Siga o passo a passo abaixo para rodar o projeto na sua máquina:
 
 ### Passo 1: Clonar o Repositório
 ```bash
-git clone https://github.com/seu-usuario/voleitatico-brasil.git
-cd voleitatico-brasil
+git clone https://github.com/seu-usuario/rede-volei.git
+cd rede-volei
 ```
 
 ### Passo 2: Instalar as Dependências
@@ -329,7 +329,7 @@ No arquivo `package.json` estão configurados os seguintes comandos:
 
 ## 📱 Preparação para Ecossistema Mobile (App Híbrido / Nativo)
 
-A arquitetura do VôleiTático foi intencionalmente projetada para permitir transição simplificada para aplicativo móvel:
+A arquitetura do REDE VÔLEI foi intencionalmente projetada para permitir transição simplificada para aplicativo móvel:
 
 1. **Persistência Agnóstica**:
    O arquivo `src/services/storageAdapter.ts` define a interface `IStorageAdapter`. Para criar um app em **React Native**, basta instanciar um adaptador que utilize `@react-native-async-storage/async-storage`:
@@ -345,7 +345,7 @@ A arquitetura do VôleiTático foi intencionalmente projetada para permitir tran
    Como a aplicação é um SPA baseado em Vite + Tailwind CSS v4, você pode convertê-la diretamente em APK (Android) e IPA (iOS) via Capacitor:
    ```bash
    npm install @capacitor/core @capacitor/cli @capacitor/android @capacitor/ios
-   npx cap init "VoleiTatico" "br.com.voleitatico.app" --web-dir dist
+   npx cap init "RedeVolei" "br.com.redevolei.app" --web-dir dist
    npm run build
    npx cap add android
    npx cap sync
@@ -360,7 +360,7 @@ A arquitetura do VôleiTático foi intencionalmente projetada para permitir tran
 
 ## ♿ Acessibilidade & Boas Práticas (WCAG)
 
-O VôleiTático segue diretrizes internacionais de acessibilidade (WCAG 2.1 nível AA):
+O REDE VÔLEI segue diretrizes internacionais de acessibilidade (WCAG 2.1 nível AA):
 - **Modo Alto Contraste**: Fundo escuro profundo (`#000000`) com marcações e atletas em amarelo e branco fluorescente de alta luminância.
 - **Temas de Piso da Quadra**: Escolha entre Taraflex Azul Clássico, Madeira de Ginásio, Laranja e Areia de Praia.
 - **Tipografia Escalar**: Fontes *Plus Jakarta Sans* e *Outfit* configuradas com proporções óticas legíveis em qualquer tamanho de display.
@@ -370,7 +370,7 @@ O VôleiTático segue diretrizes internacionais de acessibilidade (WCAG 2.1 nív
 
 ## 📄 Licença e Créditos
 
-- **Projeto**: VôleiTático Brasil
+- **Projeto**: REDE VÔLEI
 - **Finalidade**: Educacional, Esportiva e Pedagógica
 - **Regras de Referência**: Regulamento Oficial de Voleibol e Vôlei de Praia da Federação Internacional de Voleibol (FIVB) e Confederação Brasileira de Voleibol (CBV).
 

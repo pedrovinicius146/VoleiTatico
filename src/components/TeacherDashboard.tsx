@@ -204,7 +204,7 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
                 Relatório de Avaliação Tática de Voleibol
               </h3>
               <p className="text-xs text-slate-500 mt-0.5">
-                Vôley Tático Brazil • Simulador Digital & Motor de Regras
+                REDE VÔLEI • Simulador Digital & Motor de Regras
               </p>
             </div>
           </div>
