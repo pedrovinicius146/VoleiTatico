@@ -90,12 +90,12 @@ export const TacticalBoard: React.FC<TacticalBoardProps> = ({ theme, onOpenTeach
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
           <div>
             <span className="text-[10px] uppercase font-bold text-slate-400 tracking-widest block">
-              Sistema Tático de Jogo
+              Formato de Jogo (Como o time joga)
             </span>
             <h2 className="text-lg sm:text-xl font-black text-slate-900 flex items-center gap-2">
               {currentSystemInfo.name}
               <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 border border-blue-200">
-                {currentSystemInfo.difficulty}
+                {currentSystemInfo.difficulty === 'Iniciante' ? '🟢 Iniciante (Fácil)' : currentSystemInfo.difficulty === 'Intermediário' ? '🟡 Intermediário' : '🔴 Avançado'}
               </span>
             </h2>
           </div>
@@ -116,20 +116,43 @@ export const TacticalBoard: React.FC<TacticalBoardProps> = ({ theme, onOpenTeach
                     : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200'
                 }`}
               >
-                {sys.id === '6x0' && '6x0 Básico'}
+                {sys.id === '6x0' && '6x0 (Iniciante)'}
                 {sys.id === '4x2_simple' && '4x2 Simples'}
                 {sys.id === '4x2_inversion' && '4x2 Invertido'}
-                {sys.id === '5x1' && '5x1 Especializado'}
-                {sys.id === 'beach_2x2' && 'Praia (2x2)'}
+                {sys.id === '5x1' && '5x1 (Oficial Avançado)'}
+                {sys.id === 'beach_2x2' && 'Vôlei de Praia (Dupla)'}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Resumo Pedagógico do Sistema */}
-        <p className="text-xs sm:text-sm text-slate-700 bg-slate-50 p-3 rounded-lg border border-slate-200">
-          💡 <strong className="text-blue-900 font-bold">Lógica de Base:</strong> {currentSystemInfo.logic}
-        </p>
+        {/* Resumo Pedagógico do Sistema em Linguagem Simples */}
+        <div className="bg-blue-50/60 p-3 rounded-lg border border-blue-200 text-xs sm:text-sm text-slate-700 flex items-start gap-2">
+          <span className="text-base shrink-0">💡</span>
+          <div>
+            <strong className="text-blue-950 font-bold">Como funciona este formato: </strong>
+            <span>{currentSystemInfo.logic}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Cartão Didático de Ajuda Rápida para Quem Nunca Mexeu no Simulador */}
+      <div className="bg-amber-50/80 border border-amber-200 rounded-xl p-3 sm:p-4 text-xs text-amber-950">
+        <div className="flex items-center gap-2 font-black text-amber-900 mb-1">
+          <span>🏐</span>
+          <span className="text-sm">Passo a passo rápido para aprender:</span>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-2 text-amber-900">
+          <div className="bg-white/80 p-2 rounded-lg border border-amber-200">
+            <strong>1. Gire o Rodízio:</strong> Use os números de 1 a 6 abaixo para ver como o time gira no sentido horário a cada ponto de saque.
+          </div>
+          <div className="bg-white/80 p-2 rounded-lg border border-amber-200">
+            <strong>2. Veja as Fases:</strong> Alterne entre antes do saque, na batida e bola em jogo para entender as movimentações.
+          </div>
+          <div className="bg-white/80 p-2 rounded-lg border border-amber-200">
+            <strong>3. Toque ou Arraste:</strong> Toque em qualquer jogador para ler sua função ou arraste para testar se gera falta de posição!
+          </div>
+        </div>
       </div>
 
       {/* Grid Principal: Controles + Quadra 2D + Feedback */}
@@ -140,11 +163,16 @@ export const TacticalBoard: React.FC<TacticalBoardProps> = ({ theme, onOpenTeach
           {system !== 'beach_2x2' ? (
             <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm w-full min-w-0 box-border overflow-hidden">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                  Ordem de Rodízio
-                </span>
-                <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                  Sentido Horário ↻
+                <div>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">
+                    Rodízio Oficial das Posições
+                  </span>
+                  <span className="text-xs font-bold text-slate-700">
+                    Posição atual: <strong>Posição {rotation} (R{rotation})</strong>
+                  </span>
+                </div>
+                <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                  Giro Horário ↻
                 </span>
               </div>
 
@@ -157,59 +185,63 @@ export const TacticalBoard: React.FC<TacticalBoardProps> = ({ theme, onOpenTeach
                       setRotation(r as RotationIndex);
                       setPhase('reception');
                     }}
-                    className={`py-2 rounded-lg text-xs font-black transition-all flex items-center justify-center ${
+                    className={`py-2 rounded-lg text-xs font-black transition-all flex flex-col items-center justify-center ${
                       rotation === r
                         ? 'bg-yellow-500 text-slate-950 shadow-sm ring-2 ring-yellow-400 font-black'
                         : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200'
                     }`}
-                    title={`Ir para Rotação R${r}`}
+                    title={`Ver Posicionamento no Rodízio Posição ${r}`}
                   >
-                    R{r}
+                    <span>P{r}</span>
+                    <span className="text-[9px] font-normal">{r === 1 ? 'Saque' : `Pos ${r}`}</span>
                   </button>
                 ))}
               </div>
 
-              {/* Botões Anterior e Próxima distribuídos em 2 colunas responsivas */}
+              {/* Botões Voltar e Avançar Posição */}
               <div className="grid grid-cols-2 gap-2 mb-3 w-full min-w-0">
                 <button
                   onClick={prevRotation}
-                  className="py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-lg transition-all active:scale-95 flex items-center justify-center gap-1 text-xs border border-slate-200 whitespace-nowrap"
-                  title="Rotação Anterior"
+                  className="py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-lg transition-all active:scale-95 flex items-center justify-center gap-1 text-xs border border-slate-200 whitespace-nowrap"
+                  title="Girar para a posição anterior"
                 >
-                  <ChevronLeft className="w-4 h-4 shrink-0" /> Anterior
+                  <ChevronLeft className="w-4 h-4 shrink-0" /> Posição Anterior
                 </button>
 
                 <button
                   onClick={nextRotation}
-                  className="py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-lg transition-all active:scale-95 flex items-center justify-center gap-1 text-xs border border-slate-200 whitespace-nowrap"
-                  title="Próxima Rotação"
+                  className="py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-lg transition-all active:scale-95 flex items-center justify-center gap-1 text-xs border border-slate-200 whitespace-nowrap"
+                  title="Girar para a próxima posição do rodízio"
                 >
-                  Próxima <ChevronRight className="w-4 h-4 shrink-0" />
+                  Próxima Posição <ChevronRight className="w-4 h-4 shrink-0" />
                 </button>
               </div>
 
-              <div className="text-center bg-blue-50 py-2 px-3 rounded-lg border border-blue-200 text-xs font-semibold text-blue-900">
+              <div className="text-center bg-blue-50 py-2.5 px-3 rounded-lg border border-blue-200 text-xs font-semibold text-blue-900 leading-snug">
                 {system === '5x1' && (
                   <>
-                    Levantador está na{' '}
+                    No 5x1: Levantador está na{' '}
                     <strong className="text-blue-950 font-black">
-                      {rotation === 1 && 'Posição 1 (Fundo/Saque)'}
-                      {rotation === 2 && 'Posição 6 (Fundo Centro)'}
+                      {rotation === 1 && 'Posição 1 (Fundo/Sacador)'}
+                      {rotation === 2 && 'Posição 6 (Fundo Meio)'}
                       {rotation === 3 && 'Posição 5 (Fundo Esquerda)'}
-                      {rotation === 4 && 'Posição 4 (Rede Esquerda)'}
-                      {rotation === 5 && 'Posição 3 (Rede Centro)'}
-                      {rotation === 6 && 'Posição 2 (Rede Direita)'}
+                      {rotation === 4 && 'Posição 4 (Rede Entrada)'}
+                      {rotation === 5 && 'Posição 3 (Rede Meio)'}
+                      {rotation === 6 && 'Posição 2 (Rede Saída)'}
                     </strong>
                   </>
                 )}
-                {system !== '5x1' && `Posicionamento Oficial na Rotação ${rotation}`}
+                {system !== '5x1' && `Posições dos 6 jogadores no Rodízio ${rotation}`}
               </div>
             </div>
           ) : (
             <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">
-                Sacador no Vôlei de Praia
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">
+                Quem vai sacar na Dupla de Praia
               </span>
+              <p className="text-xs text-slate-500 mb-2.5">
+                No vôlei de praia não há rodízio obrigatório de posições, apenas alternância de quem saca.
+              </p>
               <div className="grid grid-cols-2 gap-2">
                 <button
                   onClick={() => setRotation(1)}
@@ -217,7 +249,7 @@ export const TacticalBoard: React.FC<TacticalBoardProps> = ({ theme, onOpenTeach
                     rotation === 1 ? 'bg-yellow-500 text-slate-950 ring-2 ring-yellow-400 font-black' : 'bg-slate-100 text-slate-700 border border-slate-200'
                   }`}
                 >
-                  🏐 Sacador 1 (Dupla 1)
+                  🏐 Atleta 1 (Sacando)
                 </button>
                 <button
                   onClick={() => setRotation(2)}
@@ -225,33 +257,37 @@ export const TacticalBoard: React.FC<TacticalBoardProps> = ({ theme, onOpenTeach
                     rotation === 2 ? 'bg-yellow-500 text-slate-950 ring-2 ring-yellow-400 font-black' : 'bg-slate-100 text-slate-700 border border-slate-200'
                   }`}
                 >
-                  🏐 Sacador 2 (Dupla 2)
+                  🏐 Atleta 2 (Sacando)
                 </button>
               </div>
             </div>
           )}
 
-          {/* Alternador de 3 Fases da Jogada (RF03) */}
+          {/* Alternador dos 3 Momentos da Jogada (Antes do Saque, Batida e Durante o Ponto) */}
           <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-2.5">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                Fase da Jogada (RF03)
-              </span>
+              <div>
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">
+                  Momento da Jogada
+                </span>
+                <span className="text-xs text-slate-500 font-medium">Veja onde os jogadores vão</span>
+              </div>
               <button
                 onClick={() => setIsPlayingAnimation(!isPlayingAnimation)}
-                className={`px-2.5 py-1 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs ${
                   isPlayingAnimation
                     ? 'bg-rose-600 text-white animate-pulse'
-                    : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm'
+                    : 'bg-emerald-600 hover:bg-emerald-700 text-white'
                 }`}
+                title="Ver os jogadores correndo e trocando de lugar"
               >
                 {isPlayingAnimation ? (
                   <>
-                    <Pause className="w-3.5 h-3.5" /> Pausar
+                    <Pause className="w-3.5 h-3.5" /> Pausar Movimento
                   </>
                 ) : (
                   <>
-                    <Play className="w-3.5 h-3.5" /> Animar Transição
+                    <Play className="w-3.5 h-3.5" /> Ver Movimento
                   </>
                 )}
               </button>
@@ -269,15 +305,15 @@ export const TacticalBoard: React.FC<TacticalBoardProps> = ({ theme, onOpenTeach
                     : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
                 }`}
               >
-                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
+                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 ${
                   phase === 'reception' ? 'bg-white text-blue-700' : 'bg-slate-200 text-slate-700'
                 }`}>
                   1
                 </span>
                 <div>
-                  <div className="font-black">1. Posicionamento de Recepção / Saque</div>
-                  <div className={`text-[11px] font-medium ${phase === 'reception' ? 'text-blue-100' : 'text-slate-500'}`}>
-                    Regra formal obrigatória (Validação de Falta de Posição).
+                  <div className="font-black">1. Antes do Saque (Esperando o Apito)</div>
+                  <div className={`text-[11px] font-medium leading-tight mt-0.5 ${phase === 'reception' ? 'text-blue-100' : 'text-slate-500'}`}>
+                    Posições obrigatórias pelas regras. Se alguém sair antes da hora, o juiz apita falta de posição.
                   </div>
                 </div>
               </button>
@@ -293,15 +329,15 @@ export const TacticalBoard: React.FC<TacticalBoardProps> = ({ theme, onOpenTeach
                     : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
                 }`}
               >
-                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
+                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 ${
                   phase === 'serve_hit' ? 'bg-slate-900 text-yellow-400' : 'bg-slate-200 text-slate-700'
                 }`}>
                   2
                 </span>
                 <div>
-                  <div className="font-black">2. Momento do Golpe do Saque</div>
-                  <div className={`text-[11px] font-medium ${phase === 'serve_hit' ? 'text-slate-900' : 'text-slate-500'}`}>
-                    Início das corridas de infiltração e trocas de rede.
+                  <div className="font-black">2. No Toque do Saque (Hora da Corrida)</div>
+                  <div className={`text-[11px] font-medium leading-tight mt-0.5 ${phase === 'serve_hit' ? 'text-slate-900' : 'text-slate-500'}`}>
+                    A bola foi sacada! Agora os jogadores estão autorizados a correr para suas posições ideais de ataque e defesa.
                   </div>
                 </div>
               </button>
@@ -317,15 +353,15 @@ export const TacticalBoard: React.FC<TacticalBoardProps> = ({ theme, onOpenTeach
                     : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
                 }`}
               >
-                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
+                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 ${
                   phase === 'transition' ? 'bg-white text-emerald-700' : 'bg-slate-200 text-slate-700'
                 }`}>
                   3
                 </span>
                 <div>
-                  <div className="font-black">3. Transição Ofensiva / Defensiva</div>
-                  <div className={`text-[11px] font-medium ${phase === 'transition' ? 'text-emerald-100' : 'text-slate-500'}`}>
-                    Posição tática final onde cada atleta ataca ou bloqueia.
+                  <div className="font-black">3. Durante o Ponto (Ataque e Bloqueio)</div>
+                  <div className={`text-[11px] font-medium leading-tight mt-0.5 ${phase === 'transition' ? 'text-emerald-100' : 'text-slate-500'}`}>
+                    A bola está em jogo. Cada atleta fica no seu melhor lugar para cortar ou bloquear na rede.
                   </div>
                 </div>
               </button>
@@ -336,26 +372,28 @@ export const TacticalBoard: React.FC<TacticalBoardProps> = ({ theme, onOpenTeach
           <div className="flex items-center gap-2">
             <button
               onClick={() => loadPresetFormation(system, rotation, phase)}
-              className="flex-1 py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 transition-all border border-slate-200"
+              className="flex-1 py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 transition-all border border-slate-200"
+              title="Colocar todos os jogadores nos lugares recomendados para esta posição"
             >
-              <RotateCcw className="w-3.5 h-3.5 text-blue-600" /> Restaurar Posição Ideal
+              <RotateCcw className="w-3.5 h-3.5 text-blue-600" /> ↺ Voltar Lugares Certos
             </button>
             <button
               onClick={() => setShowZoneNumbers(!showZoneNumbers)}
-              className={`py-2 px-3 text-xs font-bold rounded-lg border transition-all ${
+              className={`py-2.5 px-3 text-xs font-bold rounded-lg border transition-all ${
                 showZoneNumbers
                   ? 'bg-blue-50 text-blue-800 border-blue-300'
                   : 'bg-slate-100 text-slate-600 border-slate-200'
               }`}
+              title="Mostrar os números de 1 a 6 desenhados no chão da quadra"
             >
-              {showZoneNumbers ? 'Zonas 1-6 [ON]' : 'Zonas [OFF]'}
+              {showZoneNumbers ? 'Zonas 1-6 (Ligadas)' : 'Zonas 1-6 (Desligadas)'}
             </button>
           </div>
         </div>
 
         {/* Painel Central: Quadra 2D Interativa (lg:col-span-8) */}
         <div className="lg:col-span-8 flex flex-col gap-4">
-          {/* Status do Validador de Falta de Posição (RF04) */}
+          {/* Status do Validador de Posição sem siglas técnicas */}
           {system !== 'beach_2x2' && phase === 'reception' && (
             <div
               className={`p-3.5 rounded-xl border transition-all flex items-start gap-3 shadow-sm ${
@@ -369,10 +407,10 @@ export const TacticalBoard: React.FC<TacticalBoardProps> = ({ theme, onOpenTeach
                   <CheckCircle2 className="w-6 h-6 text-emerald-600 shrink-0 mt-0.5" />
                   <div>
                     <div className="font-black text-sm text-emerald-900">
-                      Posicionamento Legal! (Sem Falta de Posição)
+                      ✅ Posições 100% Corretas! Sem Falta de Posição
                     </div>
-                    <p className="text-xs text-emerald-800 mt-0.5 font-medium">
-                      Todos os atletas respeitam a adjacência com seus pares da frente/trás e da esquerda/direita. O saque pode ser autorizado pelo árbitro.
+                    <p className="text-xs text-emerald-800 mt-0.5 font-medium leading-relaxed">
+                      Todos os jogadores estão respeitando os colegas da frente, de trás, da esquerda e da direita. O juiz pode autorizar o saque!
                     </p>
                   </div>
                 </>
@@ -381,7 +419,7 @@ export const TacticalBoard: React.FC<TacticalBoardProps> = ({ theme, onOpenTeach
                   <AlertTriangle className="w-6 h-6 text-red-600 shrink-0 mt-0.5" />
                   <div>
                     <div className="font-black text-sm text-red-900 flex items-center gap-1.5">
-                      FALTA DE POSIÇÃO DETECTADA! ({faults.length} infração{faults.length > 1 ? 'ões' : ''})
+                      ⚠️ Atenção: Jogador Fora do Lugar! ({faults.length} ajuste{faults.length > 1 ? 's' : ''} necessário{faults.length > 1 ? 's' : ''})
                     </div>
                     <ul className="mt-1 text-xs space-y-1 text-red-800">
                       {faults.map((f, i) => (
@@ -391,8 +429,8 @@ export const TacticalBoard: React.FC<TacticalBoardProps> = ({ theme, onOpenTeach
                         </li>
                       ))}
                     </ul>
-                    <span className="text-[11px] text-red-700 mt-1 block font-bold">
-                      👉 Dica: Arraste as fichas destacadas com borda vermelha na quadra para corrigir a infração.
+                    <span className="text-[11px] text-red-700 mt-1.5 block font-bold">
+                      👉 Como corrigir: Arraste a ficha destacada com borda vermelha na quadra para o lugar correto ou clique em "Voltar Lugares Certos".
                     </span>
                   </div>
                 </>
@@ -414,24 +452,24 @@ export const TacticalBoard: React.FC<TacticalBoardProps> = ({ theme, onOpenTeach
               selectedPlayerId={selectedPlayer?.id}
             />
 
-            {/* Barra Didática de Instrução Gestual */}
-            <div className="w-full mt-3 pt-2.5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500">
+            {/* Barra Didática de Instrução Gestual em Linguagem Simples */}
+            <div className="w-full mt-3 pt-2.5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-600">
               <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-blue-500 shrink-0" />
-                <span><strong>1 Clique rápido:</strong> Detalhes da função tática</span>
+                <span className="w-2.5 h-2.5 rounded-full bg-blue-600 shrink-0" />
+                <span>👆 <strong>Toque rápido no jogador:</strong> Abre a explicação do que ele faz</span>
               </span>
-              <span className="flex items-center gap-1.5 text-slate-600 font-medium">
-                <span>✋ <strong>Clique e segure ou arraste:</strong> Apenas muda de lugar</span>
+              <span className="flex items-center gap-1.5 text-slate-700 font-medium">
+                <span>✋ <strong>Clique e arraste com o dedo ou mouse:</strong> Move o jogador pela quadra</span>
               </span>
             </div>
           </div>
 
-          {/* Dica Pedagógica do Professor (Didática Especial para Escolas Públicas) */}
+          {/* Dica Pedagógica do Professor em Linguagem Clara */}
           <div className="bg-blue-50 p-4 rounded-xl border-l-4 border-[#1e3a8a] border-t border-r border-b border-blue-200 shadow-sm">
             <div className="flex items-center gap-2 mb-1.5">
               <BookOpen className="w-4 h-4 text-[#1e3a8a]" />
               <span className="text-xs font-black text-[#1e3a8a] uppercase tracking-wide">
-                Explicação Pedagógica da Jogada ({system === '5x1' ? `5x1 Rotação ${rotation}` : system})
+                Dica do Professor ({system === '5x1' ? `Sistema 5x1 • Posição ${rotation}` : system})
               </span>
             </div>
             <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium">
@@ -611,7 +649,7 @@ export const TacticalBoard: React.FC<TacticalBoardProps> = ({ theme, onOpenTeach
               onClick={() => setSelectedPlayer(null)}
               className="mt-5 w-full py-2.5 bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-black rounded-lg transition-all shadow-sm"
             >
-              Entendido
+              Fechar e Voltar para a Quadra
             </button>
           </div>
         </div>

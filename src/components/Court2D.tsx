@@ -192,7 +192,7 @@ export const Court2D: React.FC<Court2DProps> = ({
   const getThemeClasses = () => {
     if (theme === 'high_contrast') {
       return {
-        outerBg: 'bg-black border-4 border-white',
+        outerBg: 'bg-black border-4 border-white rounded-2xl shadow-2xl',
         courtBg: 'bg-zinc-950',
         lines: 'stroke-white stroke-[3]',
         attackLine: 'stroke-yellow-400 stroke-[3] stroke-dasharray-[6,6]',
@@ -201,38 +201,47 @@ export const Court2D: React.FC<Court2DProps> = ({
     }
     if (isBeach || theme === 'beach_gold') {
       return {
-        outerBg: 'bg-amber-950/60 border-2 border-amber-600/60 shadow-2xl',
+        outerBg: 'bg-gradient-to-b from-amber-950/70 via-stone-900/80 to-amber-950/70 border border-amber-600/40 shadow-2xl rounded-2xl',
         courtBg: 'bg-gradient-to-b from-amber-200 via-amber-300 to-amber-400 shadow-inner',
-        lines: 'stroke-blue-700 stroke-[3]',
+        lines: 'stroke-blue-700 stroke-[2.8]',
         attackLine: 'stroke-blue-600/30 stroke-[2] stroke-dasharray-[4,4]',
         zoneText: 'fill-amber-900/30 font-bold',
       };
     }
     if (theme === 'neon_night') {
       return {
-        outerBg: 'bg-slate-950 border-2 border-cyan-500/40 shadow-[0_0_25px_rgba(6,182,212,0.2)]',
-        courtBg: 'bg-gradient-to-b from-slate-900 via-indigo-950 to-slate-900',
-        lines: 'stroke-cyan-400 stroke-[2.5]',
-        attackLine: 'stroke-fuchsia-400 stroke-[2.5] stroke-dasharray-[6,4]',
-        zoneText: 'fill-cyan-300/30',
+        outerBg: 'bg-slate-950 border border-cyan-500/40 shadow-[0_0_35px_rgba(6,182,212,0.15)] rounded-2xl',
+        courtBg: 'bg-gradient-to-b from-slate-950 via-indigo-950/80 to-slate-950 shadow-inner',
+        lines: 'stroke-cyan-400 stroke-[2.5] drop-shadow-[0_0_6px_rgba(34,211,238,0.5)]',
+        attackLine: 'stroke-fuchsia-400 stroke-[2.5] stroke-dasharray-[6,4] drop-shadow-[0_0_6px_rgba(232,121,249,0.5)]',
+        zoneText: 'fill-cyan-300/25',
       };
     }
     if (theme === 'classic_wood') {
       return {
-        outerBg: 'bg-amber-950 border-2 border-amber-700/60 shadow-xl',
-        courtBg: 'bg-gradient-to-b from-amber-700 via-amber-800 to-amber-900',
+        outerBg: 'bg-gradient-to-b from-amber-950 to-stone-900 border border-amber-800/60 shadow-2xl rounded-2xl',
+        courtBg: 'bg-gradient-to-b from-amber-700 via-amber-800 to-amber-900 shadow-inner',
         lines: 'stroke-white stroke-[2.5]',
-        attackLine: 'stroke-white stroke-[2.5] stroke-dasharray-[6,4]',
-        zoneText: 'fill-amber-200/30',
+        attackLine: 'stroke-white/90 stroke-[2.5] stroke-dasharray-[6,4]',
+        zoneText: 'fill-amber-200/25',
       };
     }
-    // Default: Taraflex Blue/Orange oficial
+    if (theme === 'taraflex_blue') {
+      return {
+        outerBg: 'bg-gradient-to-b from-blue-950 via-slate-900 to-blue-950 border-2 border-amber-500/80 shadow-2xl rounded-2xl ring-1 ring-amber-400/20',
+        courtBg: 'bg-gradient-to-b from-blue-600 via-blue-700 to-blue-800 shadow-inner',
+        lines: 'stroke-white stroke-[2.5]',
+        attackLine: 'stroke-amber-300 stroke-[2.5] stroke-dasharray-[5,4]',
+        zoneText: 'fill-white/25',
+      };
+    }
+    // Default Flagship: Modern Pro Arena 2026 (Visual esportivo moderno de alta performance)
     return {
-      outerBg: 'bg-[#1e3a8a] border-4 border-yellow-500 shadow-xl',
-      courtBg: 'bg-blue-600',
-      lines: 'stroke-white stroke-[3]',
-      attackLine: 'stroke-white stroke-[2.5] stroke-dasharray-[5,4]',
-      zoneText: 'fill-white/30',
+      outerBg: 'bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 border border-slate-700/80 shadow-2xl rounded-2xl ring-1 ring-white/10',
+      courtBg: 'bg-gradient-to-b from-[#1e40af] via-[#1d4ed8] to-[#1e3a8a] shadow-inner',
+      lines: 'stroke-white stroke-[2.5] drop-shadow-sm',
+      attackLine: 'stroke-amber-400 stroke-[2.5] stroke-dasharray-[6,4]',
+      zoneText: 'fill-white/20 font-black',
     };
   };
 

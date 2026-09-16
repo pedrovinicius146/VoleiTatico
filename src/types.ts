@@ -109,7 +109,7 @@ export interface UserProgress {
   classCode: string;
 }
 
-export type CourtTheme = 'taraflex_blue' | 'classic_wood' | 'beach_gold' | 'neon_night' | 'high_contrast';
+export type CourtTheme = 'modern_pro' | 'taraflex_blue' | 'classic_wood' | 'beach_gold' | 'neon_night' | 'high_contrast';
 
 export interface Badge {
   id: string;

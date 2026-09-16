@@ -230,13 +230,13 @@ export const QuestSystem: React.FC<QuestSystemProps> = ({
           </div>
         </div>
 
-        {/* Barra de Progresso de XP */}
+        {/* Barra de Progresso de Pontos */}
         <div className="w-full md:w-64 flex flex-col gap-1.5">
           <div className="flex items-center justify-between text-xs font-bold">
             <span className="text-blue-900 flex items-center gap-1 font-black">
-              <Zap className="w-3.5 h-3.5 fill-yellow-500 text-yellow-600" /> {userProgress.xp} XP Total
+              <Zap className="w-3.5 h-3.5 fill-yellow-500 text-yellow-600" /> {userProgress.xp} Pontos Conquistados
             </span>
-            <span className="text-slate-500 text-[11px]">Próximo: {levelInfo.nextLevelXp} XP</span>
+            <span className="text-slate-500 text-[11px]">Próximo Nível: {levelInfo.nextLevelXp} pts</span>
           </div>
           <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden border border-slate-200 p-0.5">
             <div
@@ -278,7 +278,7 @@ export const QuestSystem: React.FC<QuestSystemProps> = ({
               </div>
 
               <div className="mt-2.5 sm:mt-3 flex items-center justify-between text-[10px] sm:text-[11px] font-bold text-blue-700">
-                <span>{completedInTrail}/{trail.quests.length}</span>
+                <span>{completedInTrail} de {trail.quests.length} feitos</span>
                 <ChevronRight className="w-3.5 h-3.5" />
               </div>
             </button>
@@ -309,7 +309,7 @@ export const QuestSystem: React.FC<QuestSystemProps> = ({
                   <div>
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-white text-blue-900 border border-slate-200">
-                        Quest {idx + 1}
+                        Exercício {idx + 1}
                       </span>
                       <div className="flex items-center gap-0.5">
                         {[1, 2, 3].map((s) => (
@@ -335,13 +335,13 @@ export const QuestSystem: React.FC<QuestSystemProps> = ({
 
                   <div className="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between">
                     <span className="text-xs font-black text-blue-900">
-                      +{quest.xpReward} XP
+                      +{quest.xpReward} Pontos
                     </span>
                     <button
                       onClick={() => handleStartQuest(quest)}
                       className="px-3 py-1.5 bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-black rounded-lg text-xs flex items-center gap-1 shadow-xs transition-all active:scale-95"
                     >
-                      {stars > 0 ? 'Jogar de Novo' : 'Iniciar Desafio'} <ArrowRight className="w-3.5 h-3.5" />
+                      {stars > 0 ? 'Fazer de Novo' : 'Começar Exercício'} <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </div>
@@ -363,14 +363,14 @@ export const QuestSystem: React.FC<QuestSystemProps> = ({
                   }}
                   className="text-xs font-bold text-slate-600 hover:text-slate-900 px-2 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg border border-slate-200"
                 >
-                  ← Voltar para Trilhas
+                  ← Voltar para Todos os Exercícios
                 </button>
                 <span className="text-xs font-black text-blue-900 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
-                  +{activeQuest.xpReward} XP em jogo
+                  Vale +{activeQuest.xpReward} Pontos
                 </span>
               </div>
               <h3 className="text-lg font-black text-slate-900 mt-1">{activeQuest.title}</h3>
-              <p className="text-xs text-slate-600 font-medium">{activeQuest.objective}</p>
+              <p className="text-xs text-slate-600 font-medium"><strong>O que você deve fazer:</strong> {activeQuest.objective}</p>
             </div>
 
             {/* Timer do Modo Blitz se ativo */}
@@ -378,7 +378,7 @@ export const QuestSystem: React.FC<QuestSystemProps> = ({
               <div className="flex items-center gap-2 bg-red-50 border border-red-200 px-3.5 py-1.5 rounded-lg shadow-xs">
                 <Clock className="w-4 h-4 text-red-600 animate-spin" />
                 <span className="text-sm font-black text-red-900">
-                  Tempo: {blitzTimer}s
+                  Tempo Restante: {blitzTimer} segundos
                 </span>
               </div>
             )}
@@ -388,7 +388,7 @@ export const QuestSystem: React.FC<QuestSystemProps> = ({
           <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 flex items-start gap-2.5 text-xs text-slate-700">
             <Lightbulb className="w-4 h-4 text-yellow-600 shrink-0 mt-0.5" />
             <div>
-              <strong className="text-slate-900">Dica:</strong> {activeQuest.hint}
+              <strong className="text-slate-900">Dica Amiga do Professor:</strong> {activeQuest.hint}
             </div>
           </div>
 
@@ -410,14 +410,14 @@ export const QuestSystem: React.FC<QuestSystemProps> = ({
                 onClick={handleValidateQuest}
                 className="flex-1 min-h-[44px] py-3 px-4 bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-black rounded-xl shadow-sm text-sm flex items-center justify-center gap-2 transition-all active:scale-95"
               >
-                <CheckCircle2 className="w-4 h-4" /> Conferir Minha Resposta
+                <CheckCircle2 className="w-4 h-4" /> Conferir Se Minha Resposta Está Certa
               </button>
               <button
                 onClick={() => handleStartQuest(activeQuest)}
                 className="min-h-[44px] py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 transition-all border border-slate-200"
-                title="Reiniciar Desafio"
+                title="Recomeçar este exercício do início"
               >
-                <RotateCcw className="w-3.5 h-3.5" /> Reiniciar
+                <RotateCcw className="w-3.5 h-3.5" /> Recomeçar Este Exercício
               </button>
             </div>
           ) : (
@@ -427,13 +427,13 @@ export const QuestSystem: React.FC<QuestSystemProps> = ({
                 onClick={() => handleBlitzChoice(true)}
                 className="py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm rounded-lg shadow-sm flex items-center justify-center gap-2 transition-all active:scale-95"
               >
-                <CheckCircle2 className="w-5 h-5" /> FORMAÇÃO LEGAL ✅
+                <CheckCircle2 className="w-5 h-5" /> Posição Permitida (Correta) ✅
               </button>
               <button
                 onClick={() => handleBlitzChoice(false)}
                 className="py-3 px-4 bg-rose-600 hover:bg-rose-700 text-white font-black text-sm rounded-lg shadow-sm flex items-center justify-center gap-2 transition-all active:scale-95"
               >
-                <XCircle className="w-5 h-5" /> FALTA DE POSIÇÃO ❌
+                <XCircle className="w-5 h-5" /> Posição Ilegal (Falta de Posição) ❌
               </button>
             </div>
           )}
@@ -487,7 +487,7 @@ export const QuestSystem: React.FC<QuestSystemProps> = ({
                     }}
                     className="px-3.5 py-1.5 bg-emerald-600 text-white font-black rounded-lg text-xs hover:bg-emerald-700 transition-all shadow-xs shrink-0 whitespace-nowrap"
                   >
-                    Próxima Quest →
+                    Ir para o Próximo Exercício →
                   </button>
                 )}
               </div>

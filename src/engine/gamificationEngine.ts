@@ -306,7 +306,7 @@ export const DEFAULT_USER_PROGRESS: UserProgress = {
   level: 1,
   completedQuests: {},
   unlockedBadges: [],
-  selectedTheme: 'taraflex_blue',
+  selectedTheme: 'modern_pro',
   highContrast: false,
   studentName: 'Aluno(a) Atleta',
   schoolName: 'Escola Pública Estadual',
@@ -318,7 +318,12 @@ export function loadUserProgress(): UserProgress {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return DEFAULT_USER_PROGRESS;
     const parsed = JSON.parse(raw);
-    return { ...DEFAULT_USER_PROGRESS, ...parsed };
+    const progress = { ...DEFAULT_USER_PROGRESS, ...parsed };
+    // Se o tema estiver desatualizado ou for o antigo default 'taraflex_blue' inicial, atualiza suavemente para 'modern_pro'
+    if (!progress.selectedTheme || progress.selectedTheme === 'taraflex_blue') {
+      progress.selectedTheme = 'modern_pro';
+    }
+    return progress;
   } catch (e) {
     console.warn('Erro ao carregar progresso local:', e);
     return DEFAULT_USER_PROGRESS;

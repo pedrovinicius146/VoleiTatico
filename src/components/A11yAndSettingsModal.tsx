@@ -20,30 +20,37 @@ export const A11yAndSettingsModal: React.FC<A11yAndSettingsModalProps> = ({
 
   if (!isOpen) return null;
 
-  const themes: { id: CourtTheme; name: string; desc: string; preview: string }[] = [
+  const themes: { id: CourtTheme; name: string; desc: string; preview: string; isNew?: boolean }[] = [
+    {
+      id: 'modern_pro',
+      name: 'Modern Pro Arena (Padrão 2026)',
+      desc: 'Visual moderno de arena com piso azul oceano profundo e borda titânio.',
+      preview: 'bg-gradient-to-r from-slate-900 via-blue-700 to-indigo-950',
+      isNew: true,
+    },
     {
       id: 'taraflex_blue',
-      name: 'Taraflex Oficial (Azul & Laranja)',
+      name: 'Taraflex Olímpico (Azul & Laranja)',
       desc: 'Padrão das Olimpíadas e Liga das Nações (FIVB).',
-      preview: 'bg-gradient-to-r from-sky-600 to-orange-600',
+      preview: 'bg-gradient-to-r from-blue-700 via-sky-600 to-orange-500',
+    },
+    {
+      id: 'neon_night',
+      name: 'Cyber Night (Modo Escuro)',
+      desc: 'Estética moderna noturna com linhas ciano e alto contraste relaxante.',
+      preview: 'bg-gradient-to-r from-slate-950 via-cyan-950 to-indigo-950',
     },
     {
       id: 'classic_wood',
       name: 'Madeira Clássica de Ginásio',
-      desc: 'Visual de quadra de taco tradicional de escola pública.',
-      preview: 'bg-gradient-to-r from-amber-700 to-amber-900',
+      desc: 'Visual de quadra de taco nobre polida de ginásio oficial.',
+      preview: 'bg-gradient-to-r from-amber-700 via-amber-800 to-amber-950',
     },
     {
       id: 'beach_gold',
       name: 'Areia Tropical Dourada (Praia)',
-      desc: 'Textura de areia de praia com linhas azuis.',
-      preview: 'bg-gradient-to-r from-amber-300 to-amber-500',
-    },
-    {
-      id: 'neon_night',
-      name: 'Noite Néon Cyber (Modo Escuro)',
-      desc: 'Estética com linhas ciano e alto contraste relaxante.',
-      preview: 'bg-gradient-to-r from-slate-900 via-cyan-950 to-indigo-950',
+      desc: 'Textura de areia de praia com linhas azuis de vôlei de praia.',
+      preview: 'bg-gradient-to-r from-amber-200 via-amber-300 to-amber-500',
     },
     {
       id: 'high_contrast',
@@ -66,7 +73,7 @@ export const A11yAndSettingsModal: React.FC<A11yAndSettingsModalProps> = ({
     onProgressUpdate({
       ...userProgress,
       highContrast: nextVal,
-      selectedTheme: nextVal ? 'high_contrast' : 'taraflex_blue',
+      selectedTheme: nextVal ? 'high_contrast' : 'modern_pro',
     });
   };
 
@@ -146,9 +153,16 @@ export const A11yAndSettingsModal: React.FC<A11yAndSettingsModalProps> = ({
                 >
                   <div className={`w-8 h-8 rounded-lg ${th.preview} shrink-0 mt-0.5 shadow-xs`} />
                   <div className="flex-1">
-                    <div className="font-black text-xs text-slate-900 flex items-center justify-between">
-                      <span>{th.name}</span>
-                      {userProgress.selectedTheme === th.id && <Check className="w-3.5 h-3.5 text-blue-700" />}
+                    <div className="font-black text-xs text-slate-900 flex items-center justify-between gap-1">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span>{th.name}</span>
+                        {th.isNew && (
+                          <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-blue-600 text-white font-black tracking-wide shadow-xs">
+                            Moderno
+                          </span>
+                        )}
+                      </div>
+                      {userProgress.selectedTheme === th.id && <Check className="w-3.5 h-3.5 text-blue-700 shrink-0" />}
                     </div>
                     <p className="text-[10px] text-slate-500 mt-0.5 leading-snug">{th.desc}</p>
                   </div>

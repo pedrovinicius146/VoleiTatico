@@ -1,14 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  /* Cores Principais do Design System */
-  --color-primary: #1e3a8a; /* Azul Marinho Vôlei Brasil */
-  --color-primary-dark: #172554;
-  --color-primary-light: #2563eb;
-  --color-accent: #eab308; /* Dourado Ouro Olímpico */
-  --color-accent-light: #fef08a;
-  --color-court-taraflex: #1d4ed8;
-  --color-court-border: #f97316;
+  /* Cores Principais do Design System Moderno */
+  --color-primary: #2563eb; /* Cobalt Moderno Esportivo */
+  --color-primary-dark: #1d4ed8;
+  --color-primary-light: #60a5fa;
+  --color-surface-dark: #090d16; /* Obsidian Titânio */
+  --color-accent: #f59e0b; /* Âmbar Dourado Olímpico */
+  --color-accent-light: #fef3c7;
+  --color-court-taraflex: #1e40af;
+  --color-court-border: #0f172a;
   --color-sand: #f59e0b;
 
   /* Escala de Espaçamento Fluido com clamp() */
@@ -56,10 +57,13 @@
     overflow-x: hidden;
     background-color: #f8fafc;
     color: #0f172a;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Outfit', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    letter-spacing: -0.02em;
   }
 
   /* Garantir que botões e inputs interativos respeitem área mínima de toque no mobile */

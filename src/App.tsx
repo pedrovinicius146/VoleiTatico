@@ -99,22 +99,25 @@ export default function App() {
         )}
       </main>
 
-      {/* Rodapé Responsivo */}
-      <footer className="hidden md:flex h-12 bg-white border-t border-slate-200 items-center justify-between px-4 sm:px-8 text-[11px] font-bold text-slate-500 shadow-inner">
+      {/* Rodapé Amigável para Usuários Iniciantes */}
+      <footer className="hidden md:flex h-12 bg-white border-t border-slate-200 items-center justify-between px-4 sm:px-8 text-xs font-semibold text-slate-600 shadow-xs">
         <div className="flex items-center gap-4 sm:gap-6">
-          <span className="flex items-center gap-1.5 text-slate-700">
-            <span className="w-2.5 h-2.5 rounded-full bg-green-500"></span> SISTEMA OK (PWA OFF-LINE)
+          <span className="flex items-center gap-2 text-emerald-800 font-bold">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            Pronto para usar na aula ou treino
           </span>
-          <span className="text-slate-400">LATÊNCIA: 0ms (LOCAL)</span>
+          <span className="text-slate-500 font-medium">
+            📱 Funciona mesmo sem internet (salvo no seu aparelho)
+          </span>
         </div>
         <div className="flex items-center gap-3 sm:gap-4">
-          <span className="text-slate-800 font-bold">SECRETARIA DE EDUCAÇÃO</span>
-          <div className="h-4 w-px bg-slate-300"></div>
+          <span className="text-slate-700 font-bold">REDE VÔLEI • Educação Física Base</span>
+          <div className="h-4 w-px bg-slate-200"></div>
           <button
             onClick={() => setIsSettingsOpen(true)}
-            className="text-blue-700 hover:text-blue-900 font-bold uppercase"
+            className="text-blue-700 hover:text-blue-900 font-bold hover:underline flex items-center gap-1"
           >
-            Modo Acessível (Letras & Cores)
+            🎨 Ajustar Letras e Cores
           </button>
         </div>
       </footer>

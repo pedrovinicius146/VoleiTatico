@@ -109,11 +109,11 @@ export const BeachSimulator: React.FC<BeachSimulatorProps> = ({ theme }) => {
             <div className="flex items-center gap-2">
               <span className="text-2xl">🏖️</span>
               <h2 className="text-xl font-black text-slate-900">
-                Vôlei de Praia: Sinais de Bloqueio & Defesa
+                Vôlei de Praia: Sinais Secretos com os Dedos & Defesa
               </h2>
             </div>
             <p className="text-xs sm:text-sm text-slate-600 mt-1">
-              Aprenda a linguagem secreta dos dedos nas costas do parceiro, a leitura dos cones de sombra e a influência do vento.
+              Como funciona: o jogador que está na rede faz sinais escondidos com os dedos nas costas antes do saque. A dupla combina quem bloqueia e onde o parceiro deve correr para defender!
             </p>
           </div>
 
@@ -125,9 +125,10 @@ export const BeachSimulator: React.FC<BeachSimulatorProps> = ({ theme }) => {
                 ? 'bg-yellow-500 text-slate-950 border-yellow-600 shadow-sm font-black'
                 : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
             }`}
+            title="Mostra a área do chão que fica protegida pelo corpo do bloqueador"
           >
             <Eye className="w-3.5 h-3.5" />
-            {showShadowCones ? 'Cones de Sombra [VISÍVEL]' : 'Cones de Sombra [OCULTO]'}
+            {showShadowCones ? 'Área de Sombra (Visível)' : 'Área de Sombra (Oculta)'}
           </button>
         </div>
       </div>
@@ -180,17 +181,17 @@ export const BeachSimulator: React.FC<BeachSimulatorProps> = ({ theme }) => {
           <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
             <div className="flex items-center justify-between mb-2">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
-                <Wind className="w-3.5 h-3.5 text-blue-600" /> Condições do Vento
+                <Wind className="w-3.5 h-3.5 text-blue-600" /> Condições do Vento na Praia
               </span>
-              <span className="text-[10px] text-slate-500 font-medium">Altera a trajetória da bola</span>
+              <span className="text-[10px] text-slate-500 font-medium">Empurra ou segura a bola</span>
             </div>
             <div className="grid grid-cols-3 gap-1.5">
               {[
-                { id: 'none', label: 'Sem Vento' },
-                { id: 'favor', label: 'A Favor 💨' },
-                { id: 'against', label: 'Contra 💨' },
-                { id: 'cross_left', label: 'Esq → Dir' },
-                { id: 'cross_right', label: 'Dir → Esq' },
+                { id: 'none', label: 'Sem Vento (Calmo)' },
+                { id: 'favor', label: 'Vento a Favor 💨' },
+                { id: 'against', label: 'Vento Contra 💨' },
+                { id: 'cross_left', label: 'Soprando da Esquerda' },
+                { id: 'cross_right', label: 'Soprando da Direita' },
               ].map((w) => (
                 <button
                   key={`wind-${w.id}`}
@@ -214,17 +215,17 @@ export const BeachSimulator: React.FC<BeachSimulatorProps> = ({ theme }) => {
           <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
             <div className="flex items-center justify-between mb-1.5">
               <span className="text-xs font-black text-blue-900">
-                Sinal Ativo para este Ataque: {signalInfo.name}
+                O que o sinal significa: {signalInfo.name}
               </span>
               <span className="text-xs font-bold text-slate-500">
                 {attackerSide === 'left' ? 'Atacante da Esquerda' : 'Atacante da Direita'}
               </span>
             </div>
             <p className="text-xs text-slate-700 leading-relaxed">
-              <strong>Ação do Bloqueador:</strong> {signalInfo.blockerAction}
+              <strong>O que o Bloqueador vai fazer:</strong> {signalInfo.blockerAction}
             </p>
             <p className="text-xs text-emerald-800 font-bold mt-1">
-              <strong>Dever da Defesa:</strong> {signalInfo.defenderPosition}
+              <strong>Onde o Defensor deve ficar:</strong> {signalInfo.defenderPosition}
             </p>
           </div>
 
@@ -248,14 +249,16 @@ export const BeachSimulator: React.FC<BeachSimulatorProps> = ({ theme }) => {
             <button
               onClick={handleValidatePosition}
               className="w-full sm:flex-1 py-2.5 px-4 bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-black rounded-lg shadow-sm text-sm flex items-center justify-center gap-2 transition-all active:scale-95"
+              title="Conferir se o jogador defensor está cobrindo o lugar certo da quadra"
             >
-              <Sparkles className="w-4 h-4" /> Validar Minha Defesa
+              <Sparkles className="w-4 h-4" /> Conferir Se Minha Defesa Está Certa
             </button>
             <button
               onClick={handleAutoPosition}
               className="w-full sm:w-auto py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-lg text-xs flex items-center justify-center gap-1.5 transition-all border border-slate-200"
+              title="Mover o defensor automaticamente para a posição ideal"
             >
-              <RefreshCw className="w-3.5 h-3.5 text-blue-600" /> Posicionar Automático
+              <RefreshCw className="w-3.5 h-3.5 text-blue-600" /> Mostrar Onde o Defensor Deve Ficar
             </button>
           </div>
 
