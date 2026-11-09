@@ -66,14 +66,14 @@ export interface BeachScenario {
 
 export interface Quest {
   id: string;
-  trailId: 'fundamentals' | 'fault_hunter' | 'tactics_5x1' | 'beach_master';
+  trailId: 'fundamentals' | 'fault_hunter' | 'tactics_5x1' | 'beach_master' | 'exam_fivb';
   title: string;
   description: string;
   objective: string;
   system: SystemType;
   rotation: RotationIndex;
   phase: GamePhase;
-  type: 'drag_target' | 'identify_fault' | 'blitz_decision' | 'beach_defense' | 'libero_swap';
+  type: 'drag_target' | 'identify_fault' | 'blitz_decision' | 'beach_defense' | 'libero_swap' | 'tactical_choice';
   initialPlayers?: Partial<PlayerPosition>[];
   targetZoneRequirement?: {
     playerId: string;
@@ -86,10 +86,11 @@ export interface Quest {
   hint: string;
   pedagogicalTip: string;
   xpReward: number;
+  choices?: { id: string; label: string; isCorrect: boolean; explanation: string }[];
 }
 
 export interface LearningTrail {
-  id: 'fundamentals' | 'fault_hunter' | 'tactics_5x1' | 'beach_master';
+  id: 'fundamentals' | 'fault_hunter' | 'tactics_5x1' | 'beach_master' | 'exam_fivb';
   title: string;
   subtitle: string;
   icon: string;
@@ -107,15 +108,20 @@ export interface UserProgress {
   studentName: string;
   schoolName: string;
   classCode: string;
+  preferredViewMode?: '3d' | '2d';
+  streakDays?: number;
+  lastTrainedDate?: string;
+  hasCertified?: boolean;
 }
 
-export type CourtTheme = 'modern_pro' | 'taraflex_blue' | 'classic_wood' | 'beach_gold' | 'neon_night' | 'high_contrast';
+export type CourtTheme = 'arena_teal' | 'modern_pro' | 'taraflex_blue' | 'classic_wood' | 'beach_gold' | 'neon_night' | 'high_contrast';
 
 export interface Badge {
   id: string;
   title: string;
   description: string;
   icon: string;
+  tier?: 'bronze' | 'silver' | 'gold' | 'diamond';
   requiredXp?: number;
   conditionDescription: string;
 }

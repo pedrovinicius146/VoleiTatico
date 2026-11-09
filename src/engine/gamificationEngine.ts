@@ -36,6 +36,7 @@ export const BADGES_LIST: Badge[] = [
     title: 'Primeiro Toque',
     description: 'Completou seu primeiro desafio tático na quadra.',
     icon: '🏐',
+    tier: 'bronze',
     conditionDescription: 'Completar 1 quest qualquer.',
   },
   {
@@ -43,6 +44,7 @@ export const BADGES_LIST: Badge[] = [
     title: 'Muralha dos Três Metros',
     description: 'Compreendeu perfeitamente a restrição de ataque dos jogadores da linha de fundo (Posições 1, 6 e 5).',
     icon: '🧱',
+    tier: 'silver',
     conditionDescription: 'Completar os desafios de Fundamentos & Linha de Ataque.',
   },
   {
@@ -50,6 +52,7 @@ export const BADGES_LIST: Badge[] = [
     title: 'Infiltração Ninja',
     description: 'Posicionou o levantador do 5x1 para infiltrar sem cometer falta de posição.',
     icon: '🥷',
+    tier: 'silver',
     conditionDescription: 'Completar os 3 desafios da Trilha 5x1.',
   },
   {
@@ -57,6 +60,7 @@ export const BADGES_LIST: Badge[] = [
     title: 'Olho de Águia',
     description: 'Identificou 5 faltas de posição em menos de 10 segundos no modo Blitz.',
     icon: '🦅',
+    tier: 'gold',
     conditionDescription: 'Superar o modo Blitz com pontuação perfeita.',
   },
   {
@@ -64,6 +68,7 @@ export const BADGES_LIST: Badge[] = [
     title: 'Rei da Praia',
     description: 'Leu 10 sinais de bloqueio de duplas e cobriu a zona de defesa correta.',
     icon: '🏖️',
+    tier: 'silver',
     conditionDescription: 'Completar todos os cenários da Trilha de Vôlei de Praia.',
   },
   {
@@ -71,7 +76,24 @@ export const BADGES_LIST: Badge[] = [
     title: 'Mestre das Substituições',
     description: 'Realizou a troca do Líbero pelo Central de fundo respeitando a zona de substituição livre.',
     icon: '🔄',
+    tier: 'bronze',
     conditionDescription: 'Completar a Quest do Líbero.',
+  },
+  {
+    id: 'visao_3d',
+    title: 'Estrategista Arena 3D',
+    description: 'Dominou a análise espacial na quadra 3D oficial com perspectiva de jogo real.',
+    icon: '🧭',
+    tier: 'gold',
+    conditionDescription: 'Posicionar jogadores utilizando a visualização Arena 3D.',
+  },
+  {
+    id: 'certificado_tatico',
+    title: 'Habilitação Tática Federada',
+    description: 'Aprovado no Exame Oficial de Certificação Tática com emissão de certificado.',
+    icon: '🏆',
+    tier: 'diamond',
+    conditionDescription: 'Concluir com sucesso todas as questões do Exame de Certificação.',
   },
 ];
 
@@ -297,6 +319,102 @@ export const LEARNING_TRAILS: LearningTrail[] = [
       },
     ],
   },
+  {
+    id: 'exam_fivb',
+    title: 'Trilha 5: Exame de Certificação Tática',
+    subtitle: 'Simulado de Habilitação CBV / FIVB',
+    icon: '🏅',
+    description: 'Avaliação prática de arbitragem e tomada de decisão em situações reais de partida oficial com emissão de Certificado.',
+    quests: [
+      {
+        id: 'q13_exam_centerline',
+        trailId: 'exam_fivb',
+        title: 'Exame 1: Invasão da Linha Central',
+        description: 'Um atacante cai após o bloqueio e toca o pé na quadra adversária por baixo da rede. Quando é infração?',
+        objective: 'Responda com base na Regra 11.2 da FIVB sobre invasão por baixo.',
+        system: '5x1',
+        rotation: 1,
+        phase: 'transition',
+        type: 'tactical_choice',
+        hint: 'O pé do atleta precisa cruzar COMPLETAMENTE a linha central para ser falta, desde que não interfira no adversário.',
+        pedagogicalTip: 'Se qualquer parte do pé ainda estiver sobre ou em contato com a linha central, o jogo continua legalmente!',
+        xpReward: 120,
+        choices: [
+          { id: 'c1', label: 'É falta se qualquer parte do pé tocar o outro lado.', isCorrect: false, explanation: 'Incorreto. Apenas o cruzamento completo com todo o pé ou interferência direta é falta.' },
+          { id: 'c2', label: 'É permitido se parte do pé ainda tocar ou estiver sobre a linha central sem interferir.', isCorrect: true, explanation: 'Perfeito! Conforme a Regra 11.2.2 da FIVB, o pé pode ultrapassar parcialmente a linha central.' },
+          { id: 'c3', label: 'Nunca é permitido ultrapassar a linha central sob nenhuma circunstância.', isCorrect: false, explanation: 'Incorreto. O voleibol moderno permite contato parcial sem interferência.' },
+        ],
+      },
+      {
+        id: 'q14_exam_r6_formation',
+        trailId: 'exam_fivb',
+        title: 'Exame 2: O Desafio do Rodízio R6',
+        description: 'Na rotação 6 (R6) no 5x1, o Levantador está na Posição 2 (saída da rede) e o Oposto está na Posição 5 (fundo esquerda).',
+        objective: 'Posicione a linha de passe em 3 atletas (Ponta 1, Ponta 2 e Líbero) sem cometer falta de adjacência.',
+        system: '5x1',
+        rotation: 6,
+        phase: 'reception',
+        type: 'drag_target',
+        hint: 'O Ponta da frente (Pos 4) não pode ficar atrás do defensor correspondente na batida do saque.',
+        pedagogicalTip: 'O R6 é um dos rodízios mais fortes ofensivamente porque coloca o Oposto atacando pelo fundo (pipe/saída) e dois atacantes de rede.',
+        xpReward: 140,
+      },
+      {
+        id: 'q15_exam_libero_attack',
+        trailId: 'exam_fivb',
+        title: 'Exame 3: Levantamento do Líbero na Zona de Ataque',
+        description: 'O Líbero realiza um levantamento de toque dentro da zona de ataque (à frente da linha de 3 metros).',
+        objective: 'Qual restrição se aplica ao atacante que vai golpear esta bola?',
+        system: '5x1',
+        rotation: 2,
+        phase: 'transition',
+        type: 'tactical_choice',
+        hint: 'Lembre-se da Regra 19.3.1.4: bola golpeada acima da borda superior da rede.',
+        pedagogicalTip: 'Se o toque do líbero for feito atrás da linha de 3 metros, o atacante pode atacar livremente em qualquer altura!',
+        xpReward: 130,
+        choices: [
+          { id: 'c1', label: 'O atacante não pode atacar a bola se ela estiver inteiramente acima da borda superior da rede.', isCorrect: true, explanation: 'Correto! Regra 19.3.1.4: É falta se o ataque for completado acima do bordo superior da rede após toque do líbero na zona de frente.' },
+          { id: 'c2', label: 'O atacante pode cortar normalmente sem restrições.', isCorrect: false, explanation: 'Incorreto. Há restrição severa de altura da bola.' },
+          { id: 'c3', label: 'O líbero não tem autorização para tocar na bola dentro dos 3 metros.', isCorrect: false, explanation: 'Incorreto. O líbero pode tocar ou defender dentro dos 3 metros, mas o levantamento de toque impõe restrição.' },
+        ],
+      },
+      {
+        id: 'q16_exam_double_contact',
+        trailId: 'exam_fivb',
+        title: 'Exame 4: Toque de Bloqueio Não Conta',
+        description: 'No bloqueio coletivo, a bola toca nas mãos do Central da sua equipe antes de cair no seu lado da quadra.',
+        objective: 'Quantos toques restantes sua equipe ainda tem para construir o contra-ataque?',
+        system: '5x1',
+        rotation: 3,
+        phase: 'transition',
+        type: 'tactical_choice',
+        hint: 'No vôlei de quadra oficial (CBV/FIVB), o toque de bloqueio é neutro na contagem.',
+        pedagogicalTip: 'A equipe ainda tem os 3 toques regulamentares! Além disso, o próprio jogador que bloqueou pode dar o 1º toque.',
+        xpReward: 120,
+        choices: [
+          { id: 'c1', label: 'Apenas mais 2 toques restantes.', isCorrect: false, explanation: 'Incorreto. O toque de bloqueio não é computado como toque da equipe no vôlei de quadra (Regra 14.4.1).' },
+          { id: 'c2', label: 'Ainda restam os 3 toques completos da equipe.', isCorrect: true, explanation: 'Exato! O toque de bloqueio não conta. A equipe dispõe de 3 toques normais e o bloqueador pode tocar na bola imediatamente a seguir.' },
+          { id: 'c3', label: 'Apenas 1 toque, devendo mandar a bola de volta de primeira.', isCorrect: false, explanation: 'Incorreto.' },
+        ],
+      },
+      {
+        id: 'q17_exam_final_challenge',
+        trailId: 'exam_fivb',
+        title: 'Exame 5: Desafio Final da Habilitação',
+        description: 'Cenário de ponto decisivo (Tie-break 14x14). Corrija a formação do time para autorizar o saque sem falta de posição.',
+        objective: 'Ajuste os atletas com faltas de posição até a quadra ficar 100% legal e conquiste seu Certificado!',
+        system: '5x1',
+        rotation: 5,
+        phase: 'reception',
+        type: 'identify_fault',
+        isFaultPreset: true,
+        faultExplanation: 'O Levantador na Posição 3 invadiu a frente da linha de passe antes da batida do sacador.',
+        hint: 'Mantenha o levantador em posição legal até o momento exato do impacto da bola pelo sacador.',
+        pedagogicalTip: 'Parabéns por dominar as regras oficiais, posicionamentos e táticas avançadas do voleibol contemporâneo!',
+        xpReward: 200,
+      },
+    ],
+  },
 ];
 
 const STORAGE_KEY = 'volei_tatico_user_progress_v2';
@@ -306,11 +424,12 @@ export const DEFAULT_USER_PROGRESS: UserProgress = {
   level: 1,
   completedQuests: {},
   unlockedBadges: [],
-  selectedTheme: 'modern_pro',
+  selectedTheme: 'arena_teal',
   highContrast: false,
   studentName: 'Aluno(a) Atleta',
   schoolName: 'Escola Pública Estadual',
   classCode: 'VOL-TURMA-2026',
+  preferredViewMode: '3d',
 };
 
 export function loadUserProgress(): UserProgress {
@@ -319,9 +438,8 @@ export function loadUserProgress(): UserProgress {
     if (!raw) return DEFAULT_USER_PROGRESS;
     const parsed = JSON.parse(raw);
     const progress = { ...DEFAULT_USER_PROGRESS, ...parsed };
-    // Se o tema estiver desatualizado ou for o antigo default 'taraflex_blue' inicial, atualiza suavemente para 'modern_pro'
-    if (!progress.selectedTheme || progress.selectedTheme === 'taraflex_blue') {
-      progress.selectedTheme = 'modern_pro';
+    if (!progress.selectedTheme) {
+      progress.selectedTheme = 'arena_teal';
     }
     return progress;
   } catch (e) {
@@ -394,6 +512,23 @@ export function recordQuestCompletion(
     currentBadgeIds.add('troca_libero');
   }
 
+  if (totalCompleted >= 3 && !currentBadgeIds.has('visao_3d')) {
+    newBadges.push(BADGES_LIST.find((b) => b.id === 'visao_3d')!);
+    currentBadgeIds.add('visao_3d');
+  }
+
+  const examQuestsCompleted =
+    newCompletedQuests['q13_exam_centerline'] &&
+    newCompletedQuests['q14_exam_r6_formation'] &&
+    newCompletedQuests['q15_exam_libero_attack'] &&
+    newCompletedQuests['q16_exam_double_contact'] &&
+    newCompletedQuests['q17_exam_final_challenge'];
+
+  if (examQuestsCompleted && !currentBadgeIds.has('certificado_tatico')) {
+    newBadges.push(BADGES_LIST.find((b) => b.id === 'certificado_tatico')!);
+    currentBadgeIds.add('certificado_tatico');
+  }
+
   const newLevel = getLevelInfo(newXp).level;
   const leveledUp = newLevel > prevLevel;
 
@@ -403,6 +538,7 @@ export function recordQuestCompletion(
     level: newLevel,
     completedQuests: newCompletedQuests,
     unlockedBadges: Array.from(currentBadgeIds),
+    hasCertified: Boolean(examQuestsCompleted || current.hasCertified),
   };
 
   saveUserProgress(updated);

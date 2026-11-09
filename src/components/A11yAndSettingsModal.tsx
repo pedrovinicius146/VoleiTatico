@@ -22,11 +22,17 @@ export const A11yAndSettingsModal: React.FC<A11yAndSettingsModalProps> = ({
 
   const themes: { id: CourtTheme; name: string; desc: string; preview: string; isNew?: boolean }[] = [
     {
-      id: 'modern_pro',
-      name: 'Modern Pro Arena (Padrão 2026)',
-      desc: 'Visual moderno de arena com piso azul oceano profundo e borda titânio.',
-      preview: 'bg-gradient-to-r from-slate-900 via-blue-700 to-indigo-950',
+      id: 'arena_teal',
+      name: 'Arena FIVB Teal & Sand (Oficial 3D)',
+      desc: 'Visual idêntico ao modelo oficial 3D: piso central em madeira e borda verde-azulado petróleo.',
+      preview: 'bg-gradient-to-r from-teal-800 via-amber-200 to-teal-950',
       isNew: true,
+    },
+    {
+      id: 'modern_pro',
+      name: 'Modern Pro Arena (Azul Oceano)',
+      desc: 'Piso azul royal profundo com bordas em titânio e linhas nítidas.',
+      preview: 'bg-gradient-to-r from-slate-900 via-blue-700 to-indigo-950',
     },
     {
       id: 'taraflex_blue',

@@ -7,6 +7,7 @@ interface Court2DProps {
   players: PlayerPosition[];
   onPlayerMove?: (playerId: string, newX: number, newY: number) => void;
   onPlayerClick?: (player: PlayerPosition) => void;
+  onPlayerDoubleClick?: (player: PlayerPosition) => void;
   faults?: PositionalFault[];
   theme?: CourtTheme;
   system: SystemType;
@@ -25,6 +26,7 @@ export const Court2D: React.FC<Court2DProps> = ({
   players,
   onPlayerMove,
   onPlayerClick,
+  onPlayerDoubleClick,
   faults = [],
   theme = 'taraflex_blue',
   system,
@@ -40,6 +42,7 @@ export const Court2D: React.FC<Court2DProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeDraggingId, setActiveDraggingId] = useState<string | null>(null);
+  const lastClickRef = useRef<{ playerId: string; time: number } | null>(null);
 
   // Armazena os dados da sessão de interação atual para diferenciar 1 clique de clique-e-arrasta/segura
   const interactionSessionRef = useRef<{
@@ -146,17 +149,33 @@ export const Court2D: React.FC<Court2DProps> = ({
         const session = interactionSessionRef.current;
         const elapsed = Date.now() - session.startTime;
 
-        // 1 clique rápido (sem arrasto e sem ter segurado por tempo prolongado):
-        // -> Abre o modal do jogador
-        const isQuickClick = !session.hasMoved && !session.isHold && elapsed < 220;
-
-        if (isQuickClick) {
-          if (onPlayerClick) {
-            onPlayerClick(session.player);
+        // Se o usuário arrastou (hasMoved) ou segurou para mover (isHold):
+        // NUNCA abre popup! Reseta qualquer clique anterior.
+        if (session.hasMoved || session.isHold) {
+          lastClickRef.current = null;
+        } else if (elapsed < 280) {
+          // Clique limpo sem arrasto
+          const now = Date.now();
+          if (
+            lastClickRef.current &&
+            lastClickRef.current.playerId === session.playerId &&
+            now - lastClickRef.current.time < 380
+          ) {
+            // Clique duplo confirmado! Abre o popup detalhado do atleta
+            if (onPlayerDoubleClick) {
+              onPlayerDoubleClick(session.player);
+            } else if (onPlayerClick) {
+              onPlayerClick(session.player);
+            }
+            lastClickRef.current = null;
+          } else {
+            // Primeiro clique: apenas seleciona o atleta sem abrir o modal
+            lastClickRef.current = { playerId: session.playerId, time: now };
+            if (onPlayerClick) {
+              onPlayerClick(session.player);
+            }
           }
         }
-        // Se houve clique e segura (isHold) OU arrasto (hasMoved):
-        // -> Apenas reposicionou o boneco na quadra. O modal NÃO abre!
       }
 
       interactionSessionRef.current = null;
@@ -235,7 +254,16 @@ export const Court2D: React.FC<Court2DProps> = ({
         zoneText: 'fill-white/25',
       };
     }
-    // Default Flagship: Modern Pro Arena 2026 (Visual esportivo moderno de alta performance)
+    if (theme === 'arena_teal') {
+      return {
+        outerBg: 'bg-gradient-to-b from-[#00695c] via-[#004d40] to-[#00332c] border border-teal-500/50 shadow-2xl rounded-2xl ring-1 ring-teal-400/30',
+        courtBg: 'bg-gradient-to-b from-[#dfb17b] via-[#d4a373] to-[#c89658] shadow-inner',
+        lines: 'stroke-white stroke-[2.6] drop-shadow-sm',
+        attackLine: 'stroke-white stroke-[2.5] stroke-dasharray-[6,4]',
+        zoneText: 'fill-amber-950/25 font-black',
+      };
+    }
+    // Default Flagship: Modern Pro Arena (Visual esportivo moderno de alta performance)
     return {
       outerBg: 'bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 border border-slate-700/80 shadow-2xl rounded-2xl ring-1 ring-white/10',
       courtBg: 'bg-gradient-to-b from-[#1e40af] via-[#1d4ed8] to-[#1e3a8a] shadow-inner',

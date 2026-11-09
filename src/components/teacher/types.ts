@@ -32,7 +32,7 @@ export interface StudentRecord {
 }
 
 export interface CompetencySummary {
-  id: 'fundamentals' | 'fault_hunter' | 'tactics_5x1' | 'beach_master';
+  id: 'fundamentals' | 'fault_hunter' | 'tactics_5x1' | 'beach_master' | 'exam_fivb';
   title: string;
   subtitle: string;
   icon: string;

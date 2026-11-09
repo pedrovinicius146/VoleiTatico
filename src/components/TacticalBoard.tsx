@@ -1,10 +1,26 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { SystemType, RotationIndex, GamePhase, PlayerPosition, CourtTheme, PositionalFault } from '../types';
-import { SYSTEMS_CATALOG, SYSTEM_5X1_COVERAGE_GUIDE } from '../constants/tacticsData';
+import { SYSTEMS_CATALOG, SYSTEM_5X1_COVERAGE_GUIDE, AVBA_5X1_GUIDE } from '../constants/tacticsData';
 import { tacticsRepository } from '../repositories/tacticsRepository';
 import { validatePositionalFaults } from '../engine/rulesValidator';
 import { Court2D } from './Court2D';
-import { Play, Pause, RotateCcw, AlertTriangle, CheckCircle2, Info, ChevronRight, ChevronLeft, Sparkles, BookOpen, Shield, HelpCircle } from 'lucide-react';
+import { Court3D } from './Court3D';
+import {
+  Play,
+  Pause,
+  RotateCcw,
+  AlertTriangle,
+  CheckCircle2,
+  Info,
+  ChevronRight,
+  ChevronLeft,
+  Sparkles,
+  BookOpen,
+  Shield,
+  HelpCircle,
+  Compass,
+  Layers,
+} from 'lucide-react';
 
 interface TacticalBoardProps {
   theme: CourtTheme;
@@ -12,6 +28,7 @@ interface TacticalBoardProps {
 }
 
 export const TacticalBoard: React.FC<TacticalBoardProps> = ({ theme, onOpenTeacherView }) => {
+  const [viewMode, setViewMode] = useState<'3d' | '2d'>('3d');
   const [system, setSystem] = useState<SystemType>('5x1');
   const [rotation, setRotation] = useState<RotationIndex>(1);
   const [phase, setPhase] = useState<GamePhase>('reception');
@@ -438,82 +455,215 @@ export const TacticalBoard: React.FC<TacticalBoardProps> = ({ theme, onOpenTeach
             </div>
           )}
 
-          {/* Renderização da Quadra 2D */}
-          <div className="bg-white p-3 sm:p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center">
-            <Court2D
-              players={players}
-              onPlayerMove={handlePlayerMove}
-              onPlayerClick={(p) => setSelectedPlayer(p)}
-              faults={faults}
-              theme={theme}
-              system={system}
-              isBeach={system === 'beach_2x2'}
-              showZoneNumbers={showZoneNumbers}
-              selectedPlayerId={selectedPlayer?.id}
-            />
+          {/* Container Principal da Quadra: 3D Arena Pro / 2D Prancheta */}
+          <div className="bg-white p-3 sm:p-5 rounded-2xl border border-slate-200/90 shadow-md flex flex-col gap-3">
+            {/* Barra de Controle de Visualização (3D vs 2D) */}
+            <div className="flex items-center justify-between gap-2 flex-wrap">
+              <div className="flex items-center gap-1.5 p-1 bg-slate-900 rounded-xl border border-slate-800 shadow-xs">
+                <button
+                  onClick={() => setViewMode('3d')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                    viewMode === '3d'
+                      ? 'bg-gradient-to-r from-teal-600 to-emerald-600 text-white shadow-md shadow-teal-900/30 font-black'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                  title="Visualizar a quadra em 3D realista com iluminação e perspectiva oficial"
+                >
+                  <Compass className="w-3.5 h-3.5 text-teal-300" />
+                  <span>Arena 3D Real</span>
+                </button>
+
+                <button
+                  onClick={() => setViewMode('2d')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                    viewMode === '2d'
+                      ? 'bg-blue-600 text-white shadow-md font-black'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                  title="Visualizar a prancheta tática clássica em 2D"
+                >
+                  <Layers className="w-3.5 h-3.5" />
+                  <span>Prancheta 2D</span>
+                </button>
+              </div>
+
+              {/* Status do Modo Ativo */}
+              <div className="text-[11px] text-slate-500 font-medium hidden sm:flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-teal-500 shrink-0" />
+                <span>
+                  {viewMode === '3d'
+                    ? '3D Interativo: arraste qualquer atleta e use o mouse para girar'
+                    : '2D Zenital: visão superior clássica de prancheta'}
+                </span>
+              </div>
+            </div>
+
+            {/* Renderização Condicional da Quadra */}
+            {viewMode === '3d' ? (
+              <Court3D
+                players={players}
+                onPlayerMove={handlePlayerMove}
+                onPlayerDoubleClick={(p) => setSelectedPlayer(p)}
+                faults={faults}
+                theme={theme}
+                system={system}
+                showZoneNumbers={showZoneNumbers}
+                selectedPlayerId={selectedPlayer?.id}
+                interactive={true}
+              />
+            ) : (
+              <div className="flex flex-col items-center">
+                <Court2D
+                  players={players}
+                  onPlayerMove={handlePlayerMove}
+                  onPlayerDoubleClick={(p) => setSelectedPlayer(p)}
+                  faults={faults}
+                  theme={theme}
+                  system={system}
+                  isBeach={system === 'beach_2x2'}
+                  showZoneNumbers={showZoneNumbers}
+                  selectedPlayerId={selectedPlayer?.id}
+                />
+              </div>
+            )}
 
             {/* Barra Didática de Instrução Gestual em Linguagem Simples */}
-            <div className="w-full mt-3 pt-2.5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-600">
+            <div className="w-full pt-2.5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-600">
               <span className="flex items-center gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-blue-600 shrink-0" />
-                <span>👆 <strong>Toque rápido no jogador:</strong> Abre a explicação do que ele faz</span>
+                <span className="w-2 h-2 rounded-full bg-blue-600 shrink-0" />
+                <span>👆 <strong>Clique duplo no atleta:</strong> Abre ficha técnica e função</span>
               </span>
               <span className="flex items-center gap-1.5 text-slate-700 font-medium">
-                <span>✋ <strong>Clique e arraste com o dedo ou mouse:</strong> Move o jogador pela quadra</span>
+                <span>✋ <strong>Arraste livremente:</strong> Reposiciona o atleta sem abrir janelas</span>
               </span>
             </div>
           </div>
 
-          {/* Dica Pedagógica do Professor em Linguagem Clara */}
-          <div className="bg-blue-50 p-4 rounded-xl border-l-4 border-[#1e3a8a] border-t border-r border-b border-blue-200 shadow-sm">
+          {/* Dica Pedagógica do Professor em Linguagem Clara (Sem borda espessa clichê) */}
+          <div className="bg-slate-900 text-white p-4 rounded-2xl border border-slate-800 shadow-md">
             <div className="flex items-center gap-2 mb-1.5">
-              <BookOpen className="w-4 h-4 text-[#1e3a8a]" />
-              <span className="text-xs font-black text-[#1e3a8a] uppercase tracking-wide">
-                Dica do Professor ({system === '5x1' ? `Sistema 5x1 • Posição ${rotation}` : system})
+              <BookOpen className="w-4 h-4 text-teal-400" />
+              <span className="text-xs font-black text-teal-300 uppercase tracking-wide">
+                Dica Técnica do Treinador ({system === '5x1' ? `Sistema 5x1 • Posição ${rotation}` : system})
               </span>
             </div>
-            <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium">
+            <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium">
               {currentTip}
             </p>
           </div>
 
-          {/* Seção Exclusiva: Guia Pedagógico de Passe vs Cobertura no Sistema 5x1 */}
+          {/* Seção Especializada: Guia Oficial AVBA "Domine o Rodízio e o Sistema 5x1" */}
           {system === '5x1' && (
-            <div className="bg-white p-4 sm:p-5 rounded-xl border-2 border-slate-200 shadow-sm flex flex-col gap-3">
-              <div className="flex items-center justify-between pb-2 border-b border-slate-200">
-                <div className="flex items-center gap-2">
-                  <span className="w-7 h-7 rounded-lg bg-yellow-500 text-slate-950 font-black flex items-center justify-center text-xs shadow-xs">
-                    5x1
+            <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-sm flex flex-col gap-4">
+              {/* Header do Guia AVBA */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-8 h-8 rounded-xl bg-blue-900 text-yellow-400 font-black flex items-center justify-center text-xs shadow-xs">
+                    AVBA
                   </span>
                   <div>
-                    <h3 className="text-xs sm:text-sm font-black text-slate-900">
-                      Divisão de Papéis: Quem Realiza o Passe vs Quem Faz Cobertura?
+                    <h3 className="text-sm sm:text-base font-black text-slate-900">
+                      Guia Oficial: Domine a Rotação e o Sistema 5x1 no Voleibol
                     </h3>
                     <p className="text-[11px] text-slate-500 font-medium">
-                      Conceito fundamental para alunos e professores no voleibol moderno
+                      Diretrizes táticas avançadas de infiltração, isolamento de passe e diagonais sagradas
                     </p>
                   </div>
                 </div>
-                <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 border border-emerald-300">
-                  Regra Tática
+                <span className="text-[10px] font-black uppercase px-2.5 py-1 rounded-full bg-blue-50 text-blue-800 border border-blue-200 w-fit">
+                  FIVB Art. 7.4
                 </span>
               </div>
 
-              {/* Banner da Regra de Ouro */}
-              <div className="p-3 bg-amber-50 rounded-xl border border-amber-300 text-amber-950 text-xs font-bold leading-relaxed flex items-start gap-2 shadow-xs">
+              {/* Card Específico da Rotação Ativa (R1 a R6) */}
+              {AVBA_5X1_GUIDE.rotations[rotation] && (
+                <div className="p-4 rounded-xl bg-slate-900 text-white shadow-sm flex flex-col gap-3">
+                  <div className="flex items-center justify-between flex-wrap gap-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-black px-2 py-0.5 rounded bg-yellow-500 text-slate-950">
+                        RODÍZIO ATIVO: R{rotation}
+                      </span>
+                      <span className="text-xs font-bold text-slate-300">
+                        {AVBA_5X1_GUIDE.rotations[rotation].title}
+                      </span>
+                    </div>
+                    <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-slate-800 text-teal-300 border border-slate-700">
+                      {AVBA_5X1_GUIDE.rotations[rotation].setterLocation}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs">
+                    <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700/60 flex flex-col gap-1">
+                      <span className="text-[10px] font-bold text-amber-400 uppercase tracking-wide">
+                        🏃 Trajetória do Levantador
+                      </span>
+                      <p className="text-slate-200 leading-relaxed font-medium">
+                        {AVBA_5X1_GUIDE.rotations[rotation].setterInfiltrationCourse}
+                      </p>
+                    </div>
+
+                    <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700/60 flex flex-col gap-1">
+                      <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wide">
+                        ⚡ Atacantes Ativos ({AVBA_5X1_GUIDE.rotations[rotation].frontAttackersCount} na Rede)
+                      </span>
+                      <p className="text-slate-200 leading-relaxed font-medium">
+                        <strong className="text-white">Rede:</strong> {AVBA_5X1_GUIDE.rotations[rotation].frontAttackers}
+                      </p>
+                      <p className="text-slate-300 text-[11px] mt-0.5 font-medium">
+                        <strong className="text-white">Fundo:</strong> {AVBA_5X1_GUIDE.rotations[rotation].backRowAttacks}
+                      </p>
+                    </div>
+
+                    <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700/60 flex flex-col gap-1">
+                      <span className="text-[10px] font-bold text-rose-400 uppercase tracking-wide">
+                        ⚠️ Alerta Falta de Posição
+                      </span>
+                      <p className="text-slate-200 leading-relaxed font-medium">
+                        {AVBA_5X1_GUIDE.rotations[rotation].positionalFaultSafetyCheck}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="text-[11px] text-amber-200/90 pt-1 border-t border-slate-800 font-medium">
+                    💡 <strong>Chave Pedagógica AVBA:</strong> {AVBA_5X1_GUIDE.rotations[rotation].pedagogicalKey}
+                  </div>
+                </div>
+              )}
+
+              {/* Tabela Interativa das Diagonais Sagradas */}
+              <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">
+                  🔄 As 3 Diagonais Sagradas (Pares Opostos no Rodízio)
+                </span>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                  {AVBA_5X1_GUIDE.diagonals.map((diag, i) => (
+                    <div key={`diag-${i}`} className="p-2.5 rounded-lg bg-white border border-slate-200 shadow-xs flex flex-col gap-1">
+                      <div className="flex items-center justify-between">
+                        <span className="font-black text-xs text-blue-900">{diag.pairA} ↔ {diag.pairB}</span>
+                        <span className="text-[10px] font-mono text-slate-500 font-bold">Δ 3 Posições</span>
+                      </div>
+                      <span className="text-[11px] text-slate-600 font-medium">{diag.role}</span>
+                      <span className="text-[10px] text-blue-700 font-bold">{diag.zones}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Banner da Regra de Ouro do Isolamento do Passe */}
+              <div className="p-3.5 bg-amber-50 rounded-xl border border-amber-300 text-amber-950 text-xs font-bold leading-relaxed flex items-start gap-2 shadow-xs">
                 <span className="text-lg shrink-0">🛡️</span>
                 <div>
-                  <strong className="text-amber-900 font-black block">REGRA DE OURO DO 5x1:</strong>
+                  <strong className="text-amber-900 font-black block">REGRA DE OURO DO SISTEMA 5x1:</strong>
                   {SYSTEM_5X1_COVERAGE_GUIDE.goldenRule}
                 </div>
               </div>
 
               {/* Grid Didático de Papéis dos Atletas */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 mt-1">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
                 {SYSTEM_5X1_COVERAGE_GUIDE.roles.map((item, idx) => (
                   <div
                     key={`coverage-role-${idx}`}
-                    className={`p-3 rounded-xl border flex flex-col justify-between gap-1.5 transition-all hover:shadow-sm ${item.colorClass}`}
+                    className={`p-3 rounded-xl border flex flex-col justify-between gap-1.5 transition-all hover:shadow-xs ${item.colorClass}`}
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1.5 font-black text-xs">

@@ -89,6 +89,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = ({
   };
 
   const themeLabelMap: Record<string, string> = {
+    arena_teal: 'Arena 3D',
     modern_pro: 'Modern Pro',
     taraflex_blue: 'Olímpico',
     neon_night: 'Cyber Night',

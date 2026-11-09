@@ -610,3 +610,135 @@ export const SYSTEM_5X1_COVERAGE_GUIDE: {
   ],
 };
 
+// =========================================================================
+// GUIA OFICIAL AVBA: "DOMINE A ROTAÇÃO E O SISTEMA 5x1 NO VOLEIBOL"
+// =========================================================================
+export interface AvbaRotationGuideItem {
+  rotation: RotationIndex;
+  title: string;
+  setterLocation: 'Fundo (Infiltração)' | 'Rede (Troca de Posição)';
+  setterInitialZone: number;
+  setterTargetZone: string;
+  frontAttackersCount: number;
+  frontAttackers: string;
+  backRowAttacks: string;
+  passers: string;
+  setterInfiltrationCourse: string;
+  positionalFaultSafetyCheck: string;
+  pedagogicalKey: string;
+}
+
+export const AVBA_5X1_GUIDE = {
+  title: 'Guia Especializado: Domine a Rotação e o Sistema 5x1',
+  source: 'Manual Pedagógico AVBA (Associação de Voleibol / Scribd Doc 862392235)',
+  principles: [
+    {
+      title: '1. As Diagonais Sagradas',
+      desc: 'No 5x1, os pares de função sempre ocupam posições diametralmente opostas (diferença de 3 posições no rodízio): Levantador ↔ Oposto, Ponteiro 1 ↔ Ponteiro 2, Central 1 ↔ Central 2/Líbero. Quando um está na rede, seu par está no fundo.',
+    },
+    {
+      title: '2. A Regra do Isolamento Total do Passe',
+      desc: 'O Levantador e o Oposto NUNCA realizam o passe de saque. O Levantador prepara o 2º toque e o Oposto prepara a passada de ataque terminal. Os Centrais preparam a bola rápida de 1º tempo na rede ou são substituídos pelo Líbero no fundo. Apenas a linha de 3 passadores (P1, P2 e Líbero) toca no passe.',
+    },
+    {
+      title: '3. A Diferença Crucial: R1-R3 vs R4-R6',
+      desc: 'Nas rotações 1, 2 e 3 o Levantador está no FUNDO: ele infiltra para a rede logo após o golpe do saque, liberando 3 atacantes de rede. Nas rotações 4, 5 e 6 o Levantador está na REDE: ele já está na frente, restando 2 atacantes de rede mais o ataque do fundo (Pipe na Posição 6 ou ataque da Posição 1 pelo Oposto).',
+    },
+    {
+      title: '4. Instante Legal de Saída (FIVB Art. 7.4)',
+      desc: 'A quebra do posicionamento obrigatório ocorre no INSTANTE DO GOLPE DO SAQUE adversário (e não no apito do árbitro). Sair antes do golpe configura Falta de Posição imediata.',
+    },
+  ],
+  diagonals: [
+    { pairA: 'Levantador (S)', pairB: 'Oposto (OP)', zones: 'Posições 1↔4, 6↔3 ou 5↔2', role: 'Distribuição inteligente de jogo e ataque de potência' },
+    { pairA: 'Ponteiro 1 (P1)', pairB: 'Ponteiro 2 (P2)', zones: 'Posições 5↔2, 4↔1 ou 3↔6', role: 'Espinha dorsal do passe em W/U e ataque da ponta' },
+    { pairA: 'Central 1 (C1)', pairB: 'Central 2 (C2) / Líbero', zones: 'Posições 3↔6, 2↔5 ou 1↔4', role: 'Bloqueio agressivo, bola rápida de meio e líbero especialista' },
+  ],
+  rotations: {
+    1: {
+      rotation: 1,
+      title: 'Rotação 1 (R1): Levantador na Posição 1 (Saque/Fundo Direito)',
+      setterLocation: 'Fundo (Infiltração)',
+      setterInitialZone: 1,
+      setterTargetZone: 'Posição 2/3 (Zona de Levantamento)',
+      frontAttackersCount: 3,
+      frontAttackers: 'Ponta 2 (na 2), Central 2 (na 3) e Oposto (na 4)',
+      backRowAttacks: 'Ponteiro 1 pelo fundo se necessário',
+      passers: 'P1, P2 e Líbero (Líbero no centro, P1 na esquerda, P2 recuado na direita)',
+      setterInfiltrationCourse: 'Corrida reta e curta pela linha lateral direita. O Levantador sai da P1 e sobe velozmente rente à linha lateral até a posição 2/3 na fita.',
+      positionalFaultSafetyCheck: 'O Levantador (P1) deve estar atrás do Ponteiro 2 (P2) e à direita do Líbero (P6). O Oposto (P4) deve estar à frente do Ponteiro 1 (P5).',
+      pedagogicalKey: 'Excelente para contra-ataque rápido pois a distância de infiltração do levantador é a menor entre as rotações de fundo.',
+    },
+    2: {
+      rotation: 2,
+      title: 'Rotação 2 (R2): Levantador na Posição 6 (Fundo Central)',
+      setterLocation: 'Fundo (Infiltração)',
+      setterInitialZone: 6,
+      setterTargetZone: 'Posição 2/3 (Zona de Levantamento)',
+      frontAttackersCount: 3,
+      frontAttackers: 'Central 2 (na 2), Oposto (na 3) e Ponta 1 (na 4)',
+      backRowAttacks: 'Ponteiro 2 atacando do fundo na 1',
+      passers: 'P1, P2 e Líbero (P1 na 4 recua levemente, Líbero na 5, P2 na 1)',
+      setterInfiltrationCourse: 'Infiltração pelo meio-direito. O Levantador sai do centro do fundo (P6) passando entre a linha de passe e corre para a entrada na zona 2/3.',
+      positionalFaultSafetyCheck: 'O Levantador (P6) deve estar entre o Líbero (P5) à sua esquerda e o P2 (P1) à sua direita, e atrás do Oposto (P3).',
+      pedagogicalKey: 'O Oposto na P3 atrai o bloqueio central adversário, deixando o Ponta 1 na P4 no mano a mano.',
+    },
+    3: {
+      rotation: 3,
+      title: 'Rotação 3 (R3): Levantador na Posição 5 (Fundo Esquerdo)',
+      setterLocation: 'Fundo (Infiltração)',
+      setterInitialZone: 5,
+      setterTargetZone: 'Posição 2/3 (Zona de Levantamento)',
+      frontAttackersCount: 3,
+      frontAttackers: 'Oposto (na 2), Ponta 1 (na 3) e Central 1 (na 4)',
+      backRowAttacks: 'Ponteiro 2 atacando da 6 (Pipe)',
+      passers: 'P1, P2 e Líbero (Líbero na 1, P2 na 6, P1 na 3 recua)',
+      setterInfiltrationCourse: 'A MAIOR INFILTRAÇÃO DO VOLEIBOL ("Corrida Diagonal"): O Levantador sai da P5 e atravessa quase toda a quadra por trás da linha de recepção para chegar à P2/3 sem trombar com os passadores.',
+      positionalFaultSafetyCheck: 'O Levantador (P5) deve estar à esquerda do P2 (P6) e atrás do Central 1 (P4). Nunca pode iniciar a corrida à frente de C1 antes da bola ser golpeada!',
+      pedagogicalKey: 'Exige máximo foco e agilidade do levantador. Se o passe for quebrado, o levantador precisa de pernas rápidas.',
+    },
+    4: {
+      rotation: 4,
+      title: 'Rotação 4 (R4): Levantador na Posição 4 (Rede - Entrada)',
+      setterLocation: 'Rede (Troca de Posição)',
+      setterInitialZone: 4,
+      setterTargetZone: 'Posição 2 (Saída de Rede)',
+      frontAttackersCount: 2,
+      frontAttackers: 'Ponta 1 (desloca da 2 para a 4) e Central 1 (no meio na 3)',
+      backRowAttacks: 'Oposto (OP) atacando do fundo pela Posição 1 ou Pipe pela 6',
+      passers: 'P1 (recuado da 2), Líbero (na 6) e P2 (na 5)',
+      setterInfiltrationCourse: 'Sem corrida do fundo! O Levantador já está na rede na P4 e corre horizontalmente rente à rede até a P2. O Ponteiro 1 faz o movimento inverso cruzando para a P4.',
+      positionalFaultSafetyCheck: 'O Levantador (P4) deve estar à esquerda do Central 1 (P3) e à frente do P2 (P5). O Oposto (P1) deve estar atrás do Ponteiro 1 (P2).',
+      pedagogicalKey: 'Apresenta a primeira rotação com apenas 2 atacantes na rede. O Oposto torna-se a válvula de escape atacando do fundo com potência máxima.',
+    },
+    5: {
+      rotation: 5,
+      title: 'Rotação 5 (R5): Levantador na Posição 3 (Rede - Centro)',
+      setterLocation: 'Rede (Troca de Posição)',
+      setterInitialZone: 3,
+      setterTargetZone: 'Posição 2 (Saída de Rede)',
+      frontAttackersCount: 2,
+      frontAttackers: 'Ponta 2 (na 4) e Central 1 (desloca da 2 para a 3)',
+      backRowAttacks: 'Oposto (OP) atacando do fundo da Posição 6 (Ataque Pipe)',
+      passers: 'P1 (na 1), Líbero (na 5) e P2 (recuado da 4)',
+      setterInfiltrationCourse: 'Troca curta na rede: o Levantador dá 2 a 3 passos laterais para a direita (P3 -> P2) enquanto o Central 1 assume o meio (P2 -> P3) para a bola rápida de 1º tempo.',
+      positionalFaultSafetyCheck: 'O Levantador (P3) deve estar entre o Ponteiro 2 (P4) e o Central 1 (P2), e à frente do Oposto (P6).',
+      pedagogicalKey: 'Favorece bola de segunda intenção e finta do Levantador, que está ativo na rede.',
+    },
+    6: {
+      rotation: 6,
+      title: 'Rotação 6 (R6): Levantador na Posição 2 (Rede - Saída)',
+      setterLocation: 'Rede (Troca de Posição)',
+      setterInitialZone: 2,
+      setterTargetZone: 'Posição 2 (Já no Local Ideal de Distribuição)',
+      frontAttackersCount: 2,
+      frontAttackers: 'Ponta 2 (da 3 para a 4) e Central 2 (da 4 para a 3)',
+      backRowAttacks: 'Oposto (OP) atacando do fundo da Posição 5/6',
+      passers: 'P1 (na 6), Líbero (na 1) e P2 (recuado da 3)',
+      setterInfiltrationCourse: 'Deslocamento ZERO de armação: o Levantador já está exatamente na sua posição oficial (P2). Fica parado esperando o passe perfeito.',
+      positionalFaultSafetyCheck: 'O Levantador (P2) deve estar à direita do Ponteiro 2 (P3) e à frente do Líbero (P1).',
+      pedagogicalKey: 'A rotação mais estável do 5x1 para a distribuição. Levantador relaxado e focado na leitura do bloqueio adversário.',
+    },
+  } as Record<RotationIndex, AvbaRotationGuideItem>,
+};
+
