@@ -1,6 +1,0 @@
-{
-  "summary":  "Plano de implementação das animações 3D de ataques adversários e respostas defensivas no Vôlei de Praia.\nAbrange os 6 cenários ofensivos solicitados (paralela, diagonal forte, cut shot, largada no fundo, ataque de 2ª intenção e bola empurrada), trajetória física 3D da bola com arco de parábola, animação combinada do bloqueador (salto/fechamento) e defensor (corrida/manchete na areia), partículas de impacto na areia e execução automática ao selecionar cenários.",
-  "updatedAt":  "2026-11-08T21:03:58.990290003Z",
-  "requestFeedback":  true,
-  "userFacing":  true
-}

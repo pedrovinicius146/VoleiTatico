@@ -130,6 +130,8 @@ export interface UserAccount {
   id: string;
   username: string;
   displayName: string;
+  email?: string;
+  authProvider?: 'supabase' | 'local';
   pin?: string;
   avatar: string;
   role: 'student' | 'teacher' | 'athlete';

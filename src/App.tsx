@@ -38,7 +38,7 @@ export default function App() {
     setUserProgress(updated);
     saveUserProgress(updated);
     if (currentUser) {
-      authEngine.updateCurrentProgress(updated);
+      void authEngine.updateCurrentProgress(updated);
     }
   };
 
@@ -105,9 +105,6 @@ export default function App() {
           <span className="text-slate-700 font-bold">
             REDE VÔLEI · Simulador Tático & Educação Física de Base
           </span>
-          <span className="text-slate-400 font-medium">
-            Modo offline ativo (dados preservados localmente)
-          </span>
         </div>
         <div className="flex items-center gap-3 sm:gap-4">
           <span className="text-slate-500 font-medium">Padrão Regulamentar CBV / FIVB</span>
@@ -116,7 +113,7 @@ export default function App() {
             onClick={() => setIsSettingsOpen(true)}
             className="text-blue-700 hover:text-blue-900 font-bold hover:underline flex items-center gap-1"
           >
-            🎨 Ajustar Letras e Cores
+            Ajustar Letras e Cores
           </button>
         </div>
       </footer>
