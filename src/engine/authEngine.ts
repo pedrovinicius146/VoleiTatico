@@ -45,8 +45,11 @@ function translateSupabaseError(message: string): string {
   if (lower.includes('unable to validate email address') || lower.includes('invalid email')) {
     return 'Informe um endereço de e-mail válido.';
   }
+  if (lower.includes('email rate limit') || lower.includes('over_email_send_rate_limit')) {
+    return 'Limite gratuito de envio de e-mails do Supabase atingido (2 e-mails/hora). No painel do Supabase, vá em Authentication → Providers → Email e desative "Confirm email" (ou aguarde alguns minutos).';
+  }
   if (lower.includes('rate limit') || lower.includes('too many requests')) {
-    return 'Muitas tentativas em sequência. Aguarde alguns instantes e tente novamente.';
+    return 'Muitas requisições ao servidor de autenticação. Aguarde alguns minutos e tente novamente.';
   }
   if (lower.includes('duplicate key value') && lower.includes('username')) {
     return 'Este nome de usuário (@login) já está em uso. Escolha outro.';
@@ -329,28 +332,6 @@ class AuthEngine {
     }
 
     return { success: false, error: 'Erro ao autenticar usuário.' };
-  }
-
-  public async loginWithGoogleSupabase(): Promise<AuthActionResult> {
-    if (!supabase) {
-      return {
-        success: false,
-        error: 'Conexão com o Supabase não configurada neste ambiente.',
-      };
-    }
-
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: typeof window !== 'undefined' ? window.location.origin : undefined,
-      },
-    });
-
-    if (error) {
-      return { success: false, error: translateSupabaseError(error.message) };
-    }
-
-    return { success: true };
   }
 
   public async resetPasswordSupabase(email: string): Promise<AuthActionResult> {
