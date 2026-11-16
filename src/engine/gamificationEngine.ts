@@ -430,6 +430,8 @@ export const DEFAULT_USER_PROGRESS: UserProgress = {
   schoolName: 'Escola Pública Estadual',
   classCode: 'VOL-TURMA-2026',
   preferredViewMode: '3d',
+  completedFundamentals: {},
+  favoriteFundamentals: [],
 };
 
 export function loadUserProgress(): UserProgress {

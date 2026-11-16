@@ -14,9 +14,10 @@ import {
   X,
   Zap,
   Palette,
+  BookOpen,
 } from 'lucide-react';
 
-export type NavTabId = 'tactics' | 'beach' | 'quests' | 'teacher' | 'account';
+export type NavTabId = 'tactics' | 'fundamentals' | 'beach' | 'quests' | 'teacher' | 'account';
 
 interface AppNavigationProps {
   activeTab: NavTabId;
@@ -36,6 +37,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = ({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const levelInfo = getLevelInfo(userProgress.xp);
   const completedCount = Object.keys(userProgress.completedQuests).length;
+  const completedFundamentalsCount = Object.keys(userProgress.completedFundamentals || {}).length;
 
   const navItems: Array<{
     id: NavTabId;
@@ -51,6 +53,14 @@ export const AppNavigation: React.FC<AppNavigationProps> = ({
       description: 'Veja onde cada jogador fica e como funciona o giro oficial',
       shortLabel: 'Quadra',
       icon: <LayoutGrid className="w-4 h-4 shrink-0" />,
+    },
+    {
+      id: 'fundamentals',
+      label: 'Fundamentos',
+      description: 'Aprenda todos os fundamentos com animações 3D passo a passo',
+      shortLabel: 'Fundam.',
+      icon: <BookOpen className="w-4 h-4 shrink-0" />,
+      badge: `${completedFundamentalsCount}/7`,
     },
     {
       id: 'beach',

@@ -112,6 +112,8 @@ export interface UserProgress {
   streakDays?: number;
   lastTrainedDate?: string;
   hasCertified?: boolean;
+  completedFundamentals?: Record<string, { completedAt: number; reviewCount: number }>;
+  favoriteFundamentals?: string[];
 }
 
 export type CourtTheme = 'arena_teal' | 'modern_pro' | 'taraflex_blue' | 'classic_wood' | 'beach_gold' | 'neon_night' | 'high_contrast';

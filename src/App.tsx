@@ -9,6 +9,7 @@ import { TeacherDashboard } from './components/TeacherDashboard';
 import { A11yAndSettingsModal } from './components/A11yAndSettingsModal';
 import { LoginScreen } from './components/LoginScreen';
 import { AppNavigation, NavTabId } from './components/AppNavigation';
+import { FundamentalsPage } from './components/fundamentals/FundamentalsPage';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<NavTabId>('tactics');
@@ -67,6 +68,14 @@ export default function App() {
           <TacticalBoard
             theme={userProgress.selectedTheme}
             onOpenTeacherView={() => setActiveTab('teacher')}
+          />
+        )}
+
+        {activeTab === 'fundamentals' && (
+          <FundamentalsPage
+            userProgress={userProgress}
+            onProgressUpdate={handleProgressUpdate}
+            theme={userProgress.selectedTheme}
           />
         )}
 
